@@ -1,20 +1,29 @@
 import React from "react";
 import {
-	View,Text
-	
+	View,
+	Text,
+	StyleSheet,
 } from "react-native";
-import Lottie from 'lottie-react-native';
-
 interface Home {
-	
+	navigation: any;
 }
-const Home: React.FC<Home> = ({  }) => {
-
-    return(
-<View style={{flex:1,backgroundColor:"pink",justifyContent:"center",alignContent:"center",alignItems:"center"}}>
-<Text> Hello</Text>
-</View>
-   	);
+/** Home screen component */
+const Home: React.FC<Home> = ({ navigation }) => {
+	return (
+		<View style={styles.container}>
+			<Text style={{ color: "black", marginLeft: 10 ,fontSize:20}}>
+				Welcome to the Home page
+			</Text>
+		</View>
+	);
 };
 
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		backgroundColor: "#3EB489",
+		justifyContent: "center",
+		alignItems: "center",
+	},
+});
 export default Home;
