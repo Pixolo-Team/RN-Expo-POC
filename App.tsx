@@ -1,15 +1,19 @@
+// IMPORTS //
 import React from "react";
+
+// Import the reaact-navigation library for navigation
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-// Screens
-import CustomSplashScreen from "./src/features/screens/Splash.screen";
-import Home from "./src/features/screens/Home.screen";
+
+// Screens //
+import Home from "./src/features/home/screens/Home.screen";
+import CustomSplashScreen from "./src/features/splashscreen/screens/Splash.screen";
+
 // Navigation Stack
 const Stack = createStackNavigator();
 
 /** App */
 export default function App() {
-
 	return (
 		<NavigationContainer>
 			<Stack.Navigator initialRouteName="Splash">

@@ -6,8 +6,8 @@
 	"jsxBracketSameLine": false,
 	"semi": true,
 	"useTabs": true,
-  "tabWidth": 1,
-  "noMultipleEmptyLines": true,
+	"tabWidth": 1,
+	"noMultipleEmptyLines": true,
 	"proseWrap": "always",
 	"overrides": [
 		{
