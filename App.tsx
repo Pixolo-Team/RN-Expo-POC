@@ -1,35 +1,64 @@
-// IMPORTS //
-import React from "react";
+import React, { useCallback } from "react";
+import { View } from "react-native";
 
-// Import the reaact-navigation library for navigation
+// NAVIGATION //
+import AppNavigation from "./src/infrastructure/navigation/AuthStack";
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
 
-// Screens //
-import Home from "./src/features/home/screens/Home.screen";
-import CustomSplashScreen from "./src/features/splashscreen/screens/Splash.screen";
+// PROVIDERS //
+import { AuthProvider } from "./src/services/context/auth.context";
 
-// Navigation Stack
-const Stack = createStackNavigator();
+// STYLES //
 
-/** App */
-export default function App() {
+// COMPONENTS //
+
+// CONTEXTS //
+
+// SERVICES //
+
+// PLUGINS //
+import * as SplashScreen from "expo-splash-screen";
+
+// UTILS //
+import { loadFonts } from "./src/infrastructure/theme/fonts";
+
+// SVG'S //
+
+// Prevent the Splash Screen from hiding
+SplashScreen.preventAutoHideAsync();
+
+/** App Component */
+const App: React.FC = () => {
+	// Load Fonts
+	const [fontsLoaded] = loadFonts();
+	// Define States
+
+	// Define Refs
+
+	// Helper Functions
+
+	// Use Effect and Focus Effect
+
+	const onLayoutRootView = useCallback(async () => {
+		if (fontsLoaded) {
+			await SplashScreen.hideAsync();
+		}
+	}, [fontsLoaded]);
+
+	if (!fontsLoaded) {
+		return null;
+	}
+
 	return (
-		<NavigationContainer>
-			<Stack.Navigator initialRouteName="Splash">
-				{/* SplashScreen Screen */}
-				<Stack.Screen
-					name="Splash"
-					component={CustomSplashScreen}
-					options={{ headerShown: false }}
-				/>
-				{/* Home Screen */}
-				<Stack.Screen
-					name="Home"
-					component={Home}
-					options={{ headerShown: false }}
-				/>
-			</Stack.Navigator>
-		</NavigationContainer>
+		<>
+			<View onLayout={onLayoutRootView}></View>
+			<NavigationContainer>
+				<AuthProvider>
+					<AppNavigation />
+				</AuthProvider>
+			</NavigationContainer>
+		</>
 	);
-}
+};
+
+export default App;
