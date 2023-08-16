@@ -3,9 +3,9 @@ import React from "react";
 import { View, Text } from "react-native";
 
 // STYLES //
+import { theme } from "../../../infrastructure/theme/theme";
 
 // COMPONENTS //
-import Button from "../components/Button";
 
 // PLUGINS //
 
@@ -21,13 +21,20 @@ const HomeScreen: React.FC = () => {
 	return (
 		<View
 			style={{
-				width: "50%",
-				height: "50%",
+				flex: 1,
 				justifyContent: "center",
 				alignItems: "center",
+				backgroundColor: theme.colors.primary.regular, // used theme color
 			}}
 		>
-			<Button />
+			<Text
+				style={{
+					fontSize: theme.fontSizes.xlarge, //used fontsize from theme 
+					fontFamily: theme.fontType.bold, 
+				}}
+			>
+				Hello , Welcome to Home Screen
+			</Text>
 		</View>
 	);
 };

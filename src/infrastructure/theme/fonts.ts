@@ -1,19 +1,26 @@
 import { useFonts } from "expo-font";
 
 // Import IBM Plex font
-// const ibmPlexRegular = require("../../../assets/fonts/ibm-plex-sans/ibm-plex-sans-regular.ttf");
-// const ibmPlexMedium = require("../../../assets/fonts/ibm-plex-sans/ibm-plex-sans-medium.ttf");
-// const ibmPlexSemiBold = require("../../../assets/fonts/ibm-plex-sans/ibm-plex-sans-semibold.ttf");
-// const ibmPlexBold = require("../../../assets/fonts/ibm-plex-sans/ibm-plex-sans-bold.ttf");
+const ibmPlexRegular = require("../../../assets/fonts/ibm-plex-sans/ibm-plex-sans-regular.ttf");
+const ibmPlexMedium = require("../../../assets/fonts/ibm-plex-sans/ibm-plex-sans-medium.ttf");
+const ibmPlexSemiBold = require("../../../assets/fonts/ibm-plex-sans/ibm-plex-sans-semibold.ttf");
+const ibmPlexBold = require("../../../assets/fonts/ibm-plex-sans/ibm-plex-sans-bold.ttf");
 
 /** Load the font files */
 export const loadFonts = () => {
 	return useFonts({
-		// "primary-regular": ibmPlexRegular,
-		// "primary-medium": ibmPlexMedium,
-		// "primary-semibold": ibmPlexSemiBold,
-		// "primary-bold": ibmPlexBold,
+		"primary-regular": ibmPlexRegular,
+		"primary-medium": ibmPlexMedium,
+		"primary-semibold": ibmPlexSemiBold,
+		"primary-bold": ibmPlexBold,
 	});
+};
+
+export const fontType = {
+	regular: "primary-regular",
+	medium: "primary-medium",
+	semibold: "primary-semibold",
+	bold: "primary-bold",
 };
 
 // Variable for Font Sizes
