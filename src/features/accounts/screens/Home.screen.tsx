@@ -5,23 +5,29 @@ import { View, Text } from "react-native";
 // STYLES //
 
 // COMPONENTS //
+import Button from "../components/Button";
 
 // PLUGINS //
 
 // CONTEXT //
-import { useAuthContext } from "../../../services/context/auth.context";
 
 /** Home screen component */
 const HomeScreen: React.FC = () => {
 	// States
-	const { user } = useAuthContext();
 
 	// Helper functions
 
 	// View starts
 	return (
-		<View style={{flex:1,justifyContent:"center",alignContent:"center",alignItems:"center"}}>
-			<Text>Welcome, {user?.email}!</Text>
+		<View
+			style={{
+				width: "50%",
+				height: "50%",
+				justifyContent: "center",
+				alignItems: "center",
+			}}
+		>
+			<Button />
 		</View>
 	);
 };

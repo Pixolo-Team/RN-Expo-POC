@@ -6,7 +6,6 @@ import AppNavigation from "./src/infrastructure/navigation/AuthStack";
 import { NavigationContainer } from "@react-navigation/native";
 
 // PROVIDERS //
-import { AuthProvider } from "./src/services/context/auth.context";
 
 // STYLES //
 
@@ -53,9 +52,7 @@ const App: React.FC = () => {
 		<>
 			<View onLayout={onLayoutRootView}></View>
 			<NavigationContainer>
-				<AuthProvider>
-					<AppNavigation />
-				</AuthProvider>
+				<AppNavigation />
 			</NavigationContainer>
 		</>
 	);
