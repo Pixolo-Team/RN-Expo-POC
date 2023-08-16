@@ -16,7 +16,7 @@ import Animated, {
 	useSharedValue,
 	useAnimatedStyle,
 } from "react-native-reanimated";
-import { startScaleAnimation } from "../components/scaleBounce";
+import { startScaleAnimation } from "./scaleBounce";
 
 // SVG'S //
 
@@ -74,11 +74,11 @@ const Button: React.FC<ButtonProps> = ({
 				style={[
 					styles.commonButton,
 					{
-						backgroundColor: theme.colors.background.tint,
+						backgroundColor: theme.colors[backgroundColor].regular,
 						borderColor:
 							disabled || showButtonLoader
-								? theme.colors.primary.contrast
-								: theme.colors.border.regular,
+								? theme.colors.dark.disabled
+								: theme.colors[borderColor].regular,
 					},
 					buttonSize,
 					mode === "block" && styles.blockButton,
@@ -90,7 +90,7 @@ const Button: React.FC<ButtonProps> = ({
 				{showButtonLoader ? (
 					<>
 						<LottieView
-							// source={require("../../../../assets/animations/loading-animation.json")}
+							source={require("../../../../assets/animations/loading-animation.json")}
 							autoPlay
 							loop
 						/>
@@ -98,7 +98,7 @@ const Button: React.FC<ButtonProps> = ({
 							style={[
 								styles.commonButtonText,
 								{
-									// color: theme.colors[backgroundColor].contrast,
+									color: theme.colors[backgroundColor].contrast,
 									opacity: 0,
 								},
 								buttonFontSize,
@@ -115,7 +115,7 @@ const Button: React.FC<ButtonProps> = ({
 							style={[
 								styles.commonButtonText,
 								{
-									// color: theme.colors[backgroundColor].contrast,
+									color: theme.colors[backgroundColor].contrast,
 								},
 								buttonFontSize,
 								mode === "block" && styles.blockButtonText,
@@ -143,22 +143,22 @@ const styles: any = StyleSheet.create({
 		justifyContent: "center",
 	},
 	commonButtonText: {
-		// fontFamily: theme.font.primary.medium,
+		fontFamily: theme.font.primary.medium,
 		textAlign: "center",
 	},
 	disabledButton: {
-		// backgroundColor: theme.colors.dark.disabled,
+		backgroundColor: theme.colors.dark.disabled,
 	},
 	big: {
-		paddingVertical: theme.spacing.medium,
+		paddingVertical: theme.spacing[3],
 	},
 	small: {
-		paddingVertical: theme.spacing.medium,
-		paddingHorizontal: theme.spacing.small,
+		paddingVertical: theme.spacing[1],
+		paddingHorizontal: theme.spacing[2],
 	},
 	tiny: {
-		paddingVertical: theme.spacing.tiny,
-		paddingHorizontal: theme.spacing.small,
+		paddingVertical: theme.spacing[0],
+		paddingHorizontal: theme.spacing[2],
 	},
 	bigtext: {
 		fontSize: theme.fontSizes.medium,
@@ -173,7 +173,7 @@ const styles: any = StyleSheet.create({
 		textAlign: "center",
 	},
 	iconWrapper: {
-		marginRight: theme.spacing.tiny * 1.5,
+		marginRight: theme.spacing[0] * 1.5,
 	},
 });
 

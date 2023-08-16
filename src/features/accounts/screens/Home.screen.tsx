@@ -1,6 +1,6 @@
 // IMPORTS //
 import React from "react";
-import { View, Text } from "react-native";
+import { View,} from "react-native";
 
 // STYLES //
 
@@ -16,18 +16,31 @@ const HomeScreen: React.FC = () => {
 	// States
 
 	// Helper functions
+	/** On click Button */
+	const handleButtonPress = () => {
+		// Handle button press logic here
+		console.log("Button Pressed");
+	};
 
 	// View starts
 	return (
 		<View
 			style={{
-				width: "50%",
-				height: "50%",
+				flex: 1,
 				justifyContent: "center",
 				alignItems: "center",
 			}}
 		>
-			<Button />
+			{/* Custom Button Added */}
+			<Button
+				text="Custom Button"
+				backgroundColor="secondary"
+				borderColor="secondary"
+				onClick={handleButtonPress}
+				size="big"
+				mode="block"
+				showButtonLoader={false}
+			/>
 		</View>
 	);
 };
