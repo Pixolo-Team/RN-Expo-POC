@@ -8,6 +8,9 @@ import { theme } from "../../../infrastructure/theme/theme";
 // COMPONENTS //
 import Button from "../components/Button";
 
+// SVG //
+import Close from "../../../../assets/icons/close.svg";
+
 // PLUGINS //
 
 // CONTEXT //
@@ -35,6 +38,7 @@ const HomeScreen: React.FC = () => {
 		>
 			{/* Custom Button Added */}
 			<Button
+				icon={<Close width={20} height={20} />}
 				text="Custom Button"
 				backgroundColor="secondary"
 				borderColor="secondary"
@@ -42,7 +46,7 @@ const HomeScreen: React.FC = () => {
 				size="big"
 				mode="block"
 				showButtonLoader={false}
-			/>
+			></Button>
 		</View>
 	);
 };

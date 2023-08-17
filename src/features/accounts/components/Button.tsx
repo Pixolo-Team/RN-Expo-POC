@@ -104,7 +104,7 @@ const Button: React.FC<ButtonProps> = ({
 						</Text>
 					</>
 				) : (
-					<>
+					<View style={styles.buttonContent}>
 						{icon && <View style={styles.iconWrapper}>{icon}</View>}
 						<Text
 							style={[
@@ -118,7 +118,7 @@ const Button: React.FC<ButtonProps> = ({
 						>
 							{text}
 						</Text>
-					</>
+					</View>
 				)}
 			</TouchableOpacity>
 		</Animated.View>
@@ -127,7 +127,7 @@ const Button: React.FC<ButtonProps> = ({
 
 const styles: any = StyleSheet.create({
 	buttonWrap: {
-		alignItems: "flex-start",
+		alignItems: "center",
 	},
 	commonButton: {
 		backgroundColor: theme.colors.primary.regular,
@@ -136,6 +136,7 @@ const styles: any = StyleSheet.create({
 		flexDirection: "row",
 		alignItems: "center",
 		justifyContent: "center",
+		alignContent:"center"
 	},
 	commonButtonText: {
 		fontFamily: theme.font.primary.medium,
@@ -162,14 +163,21 @@ const styles: any = StyleSheet.create({
 	smalltext: {
 		fontSize: theme.fontSizes.small,
 	},
-	blockButton: {
-		width: "100%",
+	blockButton: {  
+		width: "80%",
 	},
 	blockButtonText: {
 		textAlign: "center",
 	},
 	iconWrapper: {
 		marginRight: theme.spacing[0] * 1.5,
+	},
+	buttonContent: {
+		width:"70%",
+		paddingHorizontal:5,
+		flexDirection: "row", 
+		alignItems: "center", 
+		justifyContent: "center", 
 	},
 });
 
