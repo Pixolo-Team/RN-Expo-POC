@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 
 // NAVIGATION //
 import AppNavigation from "./src/infrastructure/navigation/AuthStack";
@@ -40,6 +40,7 @@ const App: React.FC = () => {
 
 	const onLayoutRootView = useCallback(async () => {
 		if (fontsLoaded) {
+			console.log("fonts",fontsLoaded);
 			await SplashScreen.hideAsync();
 		}
 	}, [fontsLoaded]);
@@ -50,10 +51,14 @@ const App: React.FC = () => {
 
 	return (
 		<>
-			<View onLayout={onLayoutRootView}></View>
+		
+			<View onLayout={onLayoutRootView}>
+			
+			</View>
 			<NavigationContainer>
 				<AppNavigation />
 			</NavigationContainer>
+			<View style={{height:50}}><Text style={{fontFamily:"primary-medium",fontSize:50}} >Helllo</Text></View>
 		</>
 	);
 };

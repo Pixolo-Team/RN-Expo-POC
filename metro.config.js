@@ -17,3 +17,9 @@ module.exports = (() => {
 
 	return config;
 })();
+
+module.exports = {
+	resolver: {
+	  assetExts: ["ttf", "png"], // Add "png" to the array
+	},
+  };
