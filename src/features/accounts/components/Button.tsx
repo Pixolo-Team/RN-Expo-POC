@@ -5,7 +5,7 @@ import { Text, StyleSheet, TouchableOpacity, View } from "react-native";
 import { theme } from "../../../infrastructure/theme/theme";
 
 // COMPONENTS //
-import { startScaleAnimation } from "./scaleBounce";
+
 // SERVICES //
 
 // UTILS //
@@ -16,6 +16,7 @@ import Animated, {
 	useSharedValue,
 	useAnimatedStyle,
 } from "react-native-reanimated";
+import { startScaleAnimation } from "./scaleBounce";
 
 // SVG'S //
 
@@ -43,7 +44,6 @@ const Button: React.FC<ButtonProps> = ({
 	icon,
 	showButtonLoader = false,
 }) => {
-
 	// -- Animation -- //
 	// The bounce Scale Animation Value
 	const scaleValue = useSharedValue(1);
@@ -74,11 +74,11 @@ const Button: React.FC<ButtonProps> = ({
 				style={[
 					styles.commonButton,
 					{
-						backgroundColor: "blue",
+						backgroundColor: theme.colors[backgroundColor].regular,
 						borderColor:
 							disabled || showButtonLoader
-								? theme.colors.disabled
-								: theme.colors.border.regular,
+								? theme.colors.dark.disabled
+								: theme.colors[borderColor].regular,
 					},
 					buttonSize,
 					mode === "block" && styles.blockButton,
@@ -98,7 +98,7 @@ const Button: React.FC<ButtonProps> = ({
 							style={[
 								styles.commonButtonText,
 								{
-									color: "white",
+									color: theme.colors[backgroundColor].contrast,
 									opacity: 0,
 								},
 								buttonFontSize,
@@ -115,7 +115,7 @@ const Button: React.FC<ButtonProps> = ({
 							style={[
 								styles.commonButtonText,
 								{
-									color: theme.colors.background.tint,
+									color: theme.colors[backgroundColor].contrast,
 								},
 								buttonFontSize,
 								mode === "block" && styles.blockButtonText,
@@ -147,18 +147,18 @@ const styles: any = StyleSheet.create({
 		textAlign: "center",
 	},
 	disabledButton: {
-		backgroundColor: theme.colors.disabled,
+		backgroundColor: theme.colors.dark.disabled,
 	},
 	big: {
-		paddingVertical: theme.spacing.medium,
+		paddingVertical: theme.spacing[3],
 	},
 	small: {
-		paddingVertical: theme.spacing.small,
-		paddingHorizontal: theme.spacing.regular,
+		paddingVertical: theme.spacing[1],
+		paddingHorizontal: theme.spacing[2],
 	},
 	tiny: {
-		paddingVertical: theme.spacing.tiny,
-		paddingHorizontal: theme.spacing.regular,
+		paddingVertical: theme.spacing[0],
+		paddingHorizontal: theme.spacing[2],
 	},
 	bigtext: {
 		fontSize: theme.fontSizes.medium,
@@ -173,7 +173,7 @@ const styles: any = StyleSheet.create({
 		textAlign: "center",
 	},
 	iconWrapper: {
-		marginRight: theme.spacing.tiny * 1.5,
+		marginRight: theme.spacing[0] * 1.5,
 	},
 });
 

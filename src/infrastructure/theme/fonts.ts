@@ -1,28 +1,44 @@
 import { useFonts } from "expo-font";
 
-// Import IBM Plex font
-// const ibmPlexRegular = require("../../../assets/fonts/ibm-plex-sans/ibm-plex-sans-regular.ttf");
-// const ibmPlexMedium = require("../../../assets/fonts/ibm-plex-sans/ibm-plex-sans-medium.ttf");
-// const ibmPlexSemiBold = require("../../../assets/fonts/ibm-plex-sans/ibm-plex-sans-semibold.ttf");
-// const ibmPlexBold = require("../../../assets/fonts/ibm-plex-sans/ibm-plex-sans-bold.ttf");
+// // Import fonts
+// import DM_SANS_BOLD from "../../../assets/fonts/dm-sans/dm-sans-bold.ttf";
+// import DM_SANS_BOLD_ITALIC from "../../../assets/fonts/dm-sans/dm-sans-bold-italic.ttf";
+// import DM_SANS_ITALIC from "../../../assets/fonts/dm-sans/dm-sans-italic.ttf";
+// import DM_SANS_MEDIUM from "../../../assets/fonts/dm-sans/dm-sans-medium.ttf";
+// import DM_SANS_MEDIUM_ITALIC from "../../../assets/fonts/dm-sans/dm-sans-medium-italic.ttf";
+// import DM_SANS_REGULAR from "../../../assets/fonts/dm-sans/dm-sans-regular.ttf";
 
-/** Load the font files */
-export const loadFonts = () => {
-	return useFonts({
-		// "primary-regular": ibmPlexRegular,
-		// "primary-medium": ibmPlexMedium,
-		// "primary-semibold": ibmPlexSemiBold,
-		// "primary-bold": ibmPlexBold,
-	});
+// /** Load Fonts */
+// export const loadFonts = () => {
+// 	return useFonts({
+// 		"primary-bold": DM_SANS_BOLD,
+// 		"primary-bold-italic": DM_SANS_BOLD_ITALIC,
+// 		"primary-italic": DM_SANS_ITALIC,
+// 		"primary-medium": DM_SANS_MEDIUM,
+// 		"primary-medium-italic": DM_SANS_MEDIUM_ITALIC,
+// 		"primary-regular": DM_SANS_REGULAR,
+// 	});
+// };
+
+export const font = {
+	primary: {
+		bold: "primary-bold",
+		boldItalic: "primary-bold-italic",
+		italic: "primary-italic",
+		medium: "primary-medium",
+		mediumItalic: "primary-medium-italic",
+		regular: "primary-regular",
+	},
 };
 
 // Variable for Font Sizes
 export const fontSizes = {
-	xtiny: 10,
-	tiny: 12,
+	tiny: 10,
+	xsmall: 12,
 	small: 14,
-	medium: 15,
 	regular: 16,
+	medium: 18,
 	large: 20,
-	xlarge: 24,
+	xlarge: 26,
+	xxlarge: 34,
 };

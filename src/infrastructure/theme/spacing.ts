@@ -1,9 +1,1 @@
-export const spacing = {
-	tiny: 4,
-	small: 8,
-	regular: 10,
-	medium: 12,
-	large: 16,
-	xlarge: 18,
-	xxlarge: 32,
-};
+export const spacing = [4, 8, 12, 16, 20, 24, 28, 34, 56, 72, 80];
