@@ -58,7 +58,7 @@ const App: React.FC = () => {
 			<NavigationContainer>
 				<AppNavigation />
 			</NavigationContainer>
-			<View style={{height:50}}><Text style={{fontFamily:"primary-medium",fontSize:50}} >Helllo</Text></View>
+			<View style={{height:50}}><Text style={{fontFamily:"primarymedium",fontSize:50}} >Helllo</Text></View>
 		</>
 	);
 };

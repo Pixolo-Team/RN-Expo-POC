@@ -1,43 +1,21 @@
 import { useFonts } from "expo-font";
 
-// Import Inter fonts
-// import InterBlack from "../../../assets/fonts/Inter-Bold.ttf";
-// import InterBold from "../../../assets/fonts/Inter-Bold.ttf";
-// import InterExtraBold from "../../../assets/fonts/Inter-ExtraBold.ttf";
-// import InterExtraLight from "../../../assets/fonts/Inter-ExtraLight.ttf";
-import InterLight from "../../../assets/fonts/Inter-Light.ttf";
-import InterMedium from "../../../assets/fonts/Inter-Medium.ttf";
-import InterRegular from "../../../assets/fonts/Inter-Regular.ttf";
-import InterSemiBold from "../../../assets/fonts/Inter-SemiBold.ttf";
-// import InterThin from "../../../assets/fonts/Inter-Thin.ttf";
-import InterThin from "../../../assets/fonts/Inter-Thin.ttf";
-
-/** Load the font files */
-// export const loadFonts = () => {
-// 	return useFonts({
-// 		"black": InterBlack,
-// 		"bold": InterBold,
-// 		"extraBold": InterExtraBold,
-// 		"extraLight": InterExtraLight,
-// 		"light": InterLight,
-// 		"medium": InterMedium,
-// 		"regular": InterRegular,
-// 		"semiBold": InterSemiBold,
-// 		"thin": InterThin,
-// 	});
-// };
-
 // Import IBM Plex font
 const interBlack = require("../../../assets/fonts/Inter-Black.ttf");
 const interBold = require("../../../assets/fonts/Inter-Bold.ttf");
 const InterExtraBold = require("../../../assets/fonts/Inter-ExtraBold.ttf");
 const InterExtraLight = require("../../../assets/fonts/Inter-Light.ttf");
+const interLight = require("../../../assets/fonts/Inter-Light.ttf");
+const interMedium = require("../../../assets/fonts/Inter-Medium.ttf");
+const interRegular = require("../../../assets/fonts/Inter-Regular.ttf");
+const interSemiBold = require("../../../assets/fonts/Inter-SemiBold.ttf");
+const interThin = require("../../../assets/fonts/Inter-Thin.ttf");
 
 /** Load the font files */
 export const loadFonts = () => {
 	return useFonts({
-		"primary-regular": interBlack,
-		"primary-medium": interBold,
+		"primaryregular": interBlack,
+		"primarymedium": interBold,
 		"primary-semibold": InterExtraBold,
 		"primary-bold": InterExtraLight,
 	});
