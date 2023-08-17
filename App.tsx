@@ -1,5 +1,4 @@
-import React, { useCallback } from "react";
-import { View } from "react-native";
+import React from "react";
 
 // NAVIGATION //
 import AppNavigation from "./src/infrastructure/navigation/AuthStack";
@@ -16,20 +15,13 @@ import { NavigationContainer } from "@react-navigation/native";
 // SERVICES //
 
 // PLUGINS //
-import * as SplashScreen from "expo-splash-screen";
 
 // UTILS //
-import { loadFonts } from "./src/infrastructure/theme/fonts";
 
 // SVG'S //
 
-// Prevent the Splash Screen from hiding
-SplashScreen.preventAutoHideAsync();
-
 /** App Component */
 const App: React.FC = () => {
-	// Load Fonts
-	const [fontsLoaded] = loadFonts();
 	// Define States
 
 	// Define Refs
@@ -38,23 +30,10 @@ const App: React.FC = () => {
 
 	// Use Effect and Focus Effect
 
-	const onLayoutRootView = useCallback(async () => {
-		if (fontsLoaded) {
-			await SplashScreen.hideAsync();
-		}
-	}, [fontsLoaded]);
-
-	if (!fontsLoaded) {
-		return null;
-	}
-
 	return (
-		<>
-			<View onLayout={onLayoutRootView}></View>
-			<NavigationContainer>
-				<AppNavigation />
-			</NavigationContainer>
-		</>
+		<NavigationContainer>
+			<AppNavigation />
+		</NavigationContainer>
 	);
 };
 

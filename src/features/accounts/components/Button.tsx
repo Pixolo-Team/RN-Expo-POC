@@ -139,7 +139,6 @@ const styles: any = StyleSheet.create({
 		alignContent:"center"
 	},
 	commonButtonText: {
-		fontFamily: theme.font.primary.medium,
 		textAlign: "center",
 		margin: 5,
 	},
