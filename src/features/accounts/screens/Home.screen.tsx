@@ -1,8 +1,9 @@
 // IMPORTS //
 import React from "react";
-import { View,} from "react-native";
+import { View } from "react-native";
 
 // STYLES //
+import { theme } from "../../../infrastructure/theme/theme";
 
 // COMPONENTS //
 import Button from "../components/Button";
@@ -29,7 +30,7 @@ const HomeScreen: React.FC = () => {
 				flex: 1,
 				justifyContent: "center",
 				alignItems: "center",
-				backgroundColor:"green"
+				backgroundColor: theme.colors.primary.light,
 			}}
 		>
 			{/* Custom Button Added */}

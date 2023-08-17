@@ -5,18 +5,17 @@ import { Text, StyleSheet, TouchableOpacity, View } from "react-native";
 import { theme } from "../../../infrastructure/theme/theme";
 
 // COMPONENTS //
+import { startScaleAnimation } from "./scaleBounce";
 
 // SERVICES //
 
 // UTILS //
 
 // PLUGINS //
-import LottieView from "lottie-react-native";
 import Animated, {
 	useSharedValue,
 	useAnimatedStyle,
 } from "react-native-reanimated";
-import { startScaleAnimation } from "./scaleBounce";
 
 // SVG'S //
 
@@ -57,8 +56,9 @@ const Button: React.FC<ButtonProps> = ({
 
 	// Define Refs
 
-	// Helper Functions
+	// Determine the appropriate button size based on the specified size prop
 	const buttonSize = styles[size];
+	// Determine the appropriate font size for the button text based on the specified size prop
 	const buttonFontSize = styles[size + "text"];
 
 	// Use Effect and Focus Effect
@@ -89,11 +89,6 @@ const Button: React.FC<ButtonProps> = ({
 				{/** If Loading show loading animation */}
 				{showButtonLoader ? (
 					<>
-						<LottieView
-							source={require("../../../../assets/animations/loading-animation.json")}
-							autoPlay
-							loop
-						/>
 						<Text
 							style={[
 								styles.commonButtonText,
@@ -143,8 +138,9 @@ const styles: any = StyleSheet.create({
 		justifyContent: "center",
 	},
 	commonButtonText: {
-		// fontFamily: theme.font.primary.medium,
+		fontFamily: theme.font.primary.medium,
 		textAlign: "center",
+		margin: 5,
 	},
 	disabledButton: {
 		backgroundColor: theme.colors.dark.disabled,
