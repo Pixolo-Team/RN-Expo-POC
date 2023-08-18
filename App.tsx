@@ -1,20 +1,40 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+// NAVIGATION //
+import AppNavigation from "./src/infrastructure/navigation/AuthStack";
+import { NavigationContainer } from "@react-navigation/native";
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+// PROVIDERS //
+
+// STYLES //
+
+// COMPONENTS //
+
+// CONTEXTS //
+
+// SERVICES //
+
+// PLUGINS //
+
+// UTILS //
+
+// SVG'S //
+
+/** App Component */
+const App: React.FC = () => {
+	// Define States
+
+	// Define Refs
+
+	// Helper Functions
+
+	// Use Effect and Focus Effect
+
+	return (
+		<NavigationContainer>
+			<AppNavigation />
+		</NavigationContainer>
+	);
+};
+
+export default App;
