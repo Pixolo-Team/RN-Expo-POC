@@ -8,8 +8,6 @@ import {
   StyleProp,
   ViewStyle,
   Text,
-  Platform,
-  SafeAreaView,
 } from "react-native";
 
 // SVG //
@@ -25,7 +23,7 @@ interface CommonTextInputProps {
   value: string;
   onClear?: () => void;
   onChangeText: (text: string) => void;
-  type?: "text" | "password" | "email";
+  inputType?: "text" | "password" | "email";
   multiline?: boolean;
   numberOfLines?: number;
   onBlur?: () => void; // Add onBlur prop
@@ -42,14 +40,12 @@ const CommonTextInput: React.FC<CommonTextInputProps> = ({
   onChangeText, // Use the onChangeText prop here
   multiline = false,
   numberOfLines = 1,
-  type = "text",
+  inputType = "text",
+  onBlur,
+  errorMessage,
 }) => {
   // States
   const [isFocused, setIsFocused] = useState(false);
-  const [userName, setUserName] = useState("");
-  const [isErrorUserName, setIsErrorUserName] = useState<boolean>(false);
-  const [isErrorAll, setIsErrorAll] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const handleFocus = () => {
     setIsFocused(true);
@@ -57,18 +53,13 @@ const CommonTextInput: React.FC<CommonTextInputProps> = ({
 
   const handleBlur = () => {
     setIsFocused(false);
-  };
-
-  /** Handling the common error of the screen */
-  const errorCommon = (message: string) => {
-    setIsErrorAll(true);
-    setIsErrorUserName(true);
-    setErrorMessage(message);
+    if (onBlur) {
+      onBlur(); // Call onBlur if it's provided
+    }
   };
 
   // View Starts here
   return (
-    <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
         {/* Label for TextInput */}
         {label !== "" && <Text style={styles.textboxLabel}>{label}</Text>}
@@ -78,34 +69,30 @@ const CommonTextInput: React.FC<CommonTextInputProps> = ({
             multiline={multiline}
             numberOfLines={numberOfLines}
             placeholder={placeholder}
-            onFocus={() => setIsFocused(true)}
-            onBlur={() => setIsFocused(false)}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
             value={value}
             onChangeText={(text) => onChangeText(text)}
-            secureTextEntry={type === "password" ? true : false}
+            secureTextEntry={inputType === "password" ? true : false}
             autoCapitalize="none"
             style={[
-              styles.loginInput,
+              styles.inputStyle,
               style,
-              isFocused ? styles.isFocused : null,
-              isError ? styles.inputError : null,
-              multiline
-                ? Platform.OS === "ios"
-                  ? { height: 100 }
-                  : null
-                : { height: 40 },
-              multiline ? styles.multiline : null,
+              isFocused && styles.isFocused,
+              isError && styles.inputError,
+              multiline && styles.multiline,
+              multiline ? { height: 100 } : { height: 40 },
             ]}
           />
 
-          <View style={styles.inputIconsWrap}>
+          <View style={styles.clearIconView}>
             {/* Clear Button */}
             {value.length > 0 && (
               <TouchableOpacity
                 activeOpacity={0.4}
                 style={[
-                  styles.inputActionButtons,
-                  multiline ? styles.inputActionButtosMultiline : null,
+                  styles.clearButton,
+                  multiline && styles.clearIconButtonForMultiline,
                 ]}
                 onPress={onClear}
               >
@@ -114,24 +101,24 @@ const CommonTextInput: React.FC<CommonTextInputProps> = ({
             )}
           </View>
         </View>
-        
+
         {/* Error message */}
-        {errorMessage && isError && (
-          <Text style={styles.loginErrorMessage}>{errorMessage}</Text>
+        {isError && (
+          <Text style={styles.errorMessageStyle}>{errorMessage}</Text>
         )}
       </View>
-    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    height: 200,
+    height: 80,
     alignItems: "center",
     marginTop: 20,
     backgroundColor: "#ffffff",
+    
   },
-  inputIconsWrap: {
+  clearIconView: {
     position: "absolute",
     right: 5,
     top: 0,
@@ -139,7 +126,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: "100%",
   },
-  loginInput: {
+  inputStyle: {
     borderColor: "#DCEFFA",
     color: "#707070",
     paddingHorizontal: 10,
@@ -148,14 +135,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     justifyContent: "flex-start",
     width: 300,
-  },
-  input: {
-    width: 250,
-    height: 44,
-    padding: 10,
-    marginTop: 20,
-    marginBottom: 10,
-    backgroundColor: "#e8e8e8",
   },
   textboxLabel: {
     alignSelf: "flex-start",
@@ -172,24 +151,19 @@ const styles = StyleSheet.create({
     textAlignVertical: "top",
     paddingTop: 5,
   },
-  inputActionButtons: {
+  clearButton: {
     alignItems: "center",
     justifyContent: "center",
-    // height: "100%",
     width: 25,
   },
-  inputActionButtosMultiline: {
+  clearIconButtonForMultiline: {
     justifyContent: "flex-start",
     paddingTop: 10,
   },
-  loginErrorMessage: {
-    fontFamily: "primary-regular",
+  errorMessageStyle: {
     fontSize: 12,
     color: "#F31700",
     marginTop: 4,
-  },
-  loginFormError: {
-    marginTop: 32,
   },
 });
 

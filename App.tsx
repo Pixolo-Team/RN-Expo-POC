@@ -1,66 +1,73 @@
 // IMPORTS //
 import React, { useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 // COMPONENTS //
 import CommonTextInput from "./src/components/common-compoents/CommonTextInput";
 
 /* APP */
 export default function App() {
-  const [textInputValue, setTextInputValue] = useState("");
+  // States
   const [userNameInput, setUserNameInput] = useState<string>("");
   const [isErrorUserName, setIsErrorUserName] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
 
+  /* Handles changes in the input field.  */
   const handleUserNameInputChange = (text: any) => {
     setUserNameInput(text);
     setIsErrorUserName(false); // Reset error state when user starts typing
   };
 
-  const handleClearUserNameInput = () => {
+  /* This function is called when the user wants to clear the input.  */
+  const toClearUserNameInput = () => {
     setUserNameInput("");
     setIsErrorUserName(false); // Reset error state when clearing input
   };
 
+  /* Validates the user name input based on custom rules. */
   const handleValidateUserName = () => {
-    // You can implement your validation logic here
-    // For example, checking if the username is empty
-    if (userNameInput.trim() === "") {
+    // Check if the user name is empty or too short
+    if (userNameInput.trim() === "" || userNameInput.length < 3) {
       setIsErrorUserName(true);
-      setErrorMessage("Username cannot be empty");
-    } else if (userNameInput.length < 3) {
-      // You can add more validation checks as needed
-      setIsErrorUserName(true);
-      setErrorMessage("Username must be at least 3 characters long");
+      setErrorMessage(
+        userNameInput.trim() === ""
+          ? "Username cannot be empty"
+          : "Username must be at least 3 characters long"
+      );
     } else {
+      // Validation succeeded
+      Alert.alert("User name is correct"); // Added for testing purpose
       setIsErrorUserName(false);
-      setErrorMessage(""); // Clear the error message if there are no errors
+      setErrorMessage("");
     }
   };
 
   // View starts here
   return (
     <View style={styles.container}>
-      <CommonTextInput
-        label="User Name"
-        placeholder="User Name"
-        isError={isErrorUserName}
-        value={userNameInput}
-        onClear={handleClearUserNameInput}
-        onChangeText={handleUserNameInputChange}
-        onBlur={handleValidateUserName}
-      />
-      <View style={{ position: "absolute", backgroundColor: "pink" }}>
-        {/* Error message for invalid combination of company name and password */}
-        {isErrorUserName && (
-          <Text style={styles.errorMessage}>{errorMessage}</Text>
-        )}
+      <View style={{ height: 110 }}>
+        <CommonTextInput
+          label="User Name"
+          placeholder="User Name"
+          isError={isErrorUserName}
+          value={userNameInput}
+          onClear={toClearUserNameInput}
+          onChangeText={handleUserNameInputChange}
+          onBlur={handleValidateUserName}
+        />
+        <View style={{ position: "relative" }}>
+          {/* Error message  */}
+          {isErrorUserName && (
+            // Display an error message only if isErrorUserName is true (an error occurred)
+            <Text style={styles.errorMessageStyle}>{errorMessage}</Text>
+          )}
+        </View>
       </View>
       <TouchableOpacity
-        style={{ position: "absolute" , marginTop:50}}
+        style={styles.button}
         onPress={handleValidateUserName}
       >
-        <Text>Click on this </Text>
+        <Text>Click to Check</Text>
       </TouchableOpacity>
     </View>
   );
@@ -73,19 +80,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  loginErrorMessage: {
-    fontFamily: "primary-regular",
-    fontSize: 12,
+  errorMessageStyle: {
+    fontSize: 14,
     color: "#F31700",
-    marginTop: 4,
   },
-  loginFormError: {
-    marginTop: 32,
-  },
-  errorMessage: {
-    fontFamily: "primary-regular",
-    fontSize: 12,
-    color: "#F31700",
-    // marginTop: 4,
+  button: {
+    marginTop: 50,
   },
 });
