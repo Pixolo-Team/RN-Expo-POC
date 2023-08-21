@@ -2,10 +2,9 @@ import React from "react";
 import { Text, StyleSheet, TouchableOpacity, View } from "react-native";
 
 // STYLES//
-import { theme } from "../../../infrastructure/theme/theme";
+import { theme } from "../../infrastructure/theme/theme";
 
 // COMPONENTS //
-import { startScaleAnimation } from "./scaleBounce";
 
 // SERVICES //
 
@@ -16,6 +15,9 @@ import Animated, {
 	useSharedValue,
 	useAnimatedStyle,
 } from "react-native-reanimated";
+
+// ANIMATION //
+import { startScaleAnimation } from "../../animation/scaleBounce";
 
 // SVG'S //
 
@@ -28,7 +30,6 @@ interface ButtonProps {
 	size?: string;
 	mode?: string;
 	icon?: any;
-	showButtonLoader?: boolean;
 }
 
 /** Button Component */
@@ -41,7 +42,6 @@ const Button: React.FC<ButtonProps> = ({
 	size = "big",
 	mode,
 	icon,
-	showButtonLoader = false,
 }) => {
 	// -- Animation -- //
 	// The bounce Scale Animation Value
@@ -75,51 +75,29 @@ const Button: React.FC<ButtonProps> = ({
 					styles.commonButton,
 					{
 						backgroundColor: theme.colors[backgroundColor].regular,
-						borderColor:
-							disabled || showButtonLoader
-								? theme.colors.dark.disabled
-								: theme.colors[borderColor].regular,
+						borderColor: disabled
+							? theme.colors.dark.disabled
+							: theme.colors[borderColor].regular,
 					},
 					buttonSize,
 					mode === "block" && styles.blockButton,
-					(disabled || showButtonLoader) && styles.disabledButton,
+					disabled && styles.disabledButton,
 				]}
-				disabled={disabled || showButtonLoader}
+				disabled={disabled}
 			>
-				{/** If Loading show loading animation */}
-				{showButtonLoader ? (
-					<>
-						<Text
-							style={[
-								styles.commonButtonText,
-								{
-									color: theme.colors[backgroundColor].contrast,
-									opacity: 0,
-								},
-								buttonFontSize,
-								mode === "block" && styles.blockButtonText,
-							]}
-						>
-							{text}
-						</Text>
-					</>
-				) : (
-					<View style={styles.buttonContent}>
-						{icon && <View style={styles.iconWrapper}>{icon}</View>}
-						<Text
-							style={[
-								styles.commonButtonText,
-								{
-									color: theme.colors[backgroundColor].contrast,
-								},
-								buttonFontSize,
-								mode === "block" && styles.blockButtonText,
-							]}
-						>
-							{text}
-						</Text>
-					</View>
-				)}
+				{icon && <View style={styles.iconWrapper}>{icon}</View>}
+				<Text
+					style={[
+						styles.commonButtonText,
+						{
+							color: theme.colors[backgroundColor].contrast,
+						},
+						buttonFontSize,
+						mode === "block" && styles.blockButtonText,
+					]}
+				>
+					{text}
+				</Text>
 			</TouchableOpacity>
 		</Animated.View>
 	);
@@ -127,7 +105,7 @@ const Button: React.FC<ButtonProps> = ({
 
 const styles: any = StyleSheet.create({
 	buttonWrap: {
-		alignItems: "center",
+		alignItems: "flex-start",
 	},
 	commonButton: {
 		backgroundColor: theme.colors.primary.regular,
@@ -136,11 +114,9 @@ const styles: any = StyleSheet.create({
 		flexDirection: "row",
 		alignItems: "center",
 		justifyContent: "center",
-		alignContent:"center"
 	},
 	commonButtonText: {
 		textAlign: "center",
-		margin: 5,
 	},
 	disabledButton: {
 		backgroundColor: theme.colors.dark.disabled,
@@ -162,21 +138,14 @@ const styles: any = StyleSheet.create({
 	smalltext: {
 		fontSize: theme.fontSizes.small,
 	},
-	blockButton: {  
-		width: "80%",
+	blockButton: {
+		width: "100%",
 	},
 	blockButtonText: {
 		textAlign: "center",
 	},
 	iconWrapper: {
 		marginRight: theme.spacing[0] * 1.5,
-	},
-	buttonContent: {
-		width:"70%",
-		paddingHorizontal:5,
-		flexDirection: "row", 
-		alignItems: "center", 
-		justifyContent: "center", 
 	},
 });
 

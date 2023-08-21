@@ -3,10 +3,9 @@ import React from "react";
 import { View } from "react-native";
 
 // STYLES //
-import { theme } from "../../../infrastructure/theme/theme";
 
 // COMPONENTS //
-import Button from "../components/Button";
+import Button from "../../../components/common-components/Button";
 
 // SVG //
 import Close from "../../../../assets/icons/close.svg";
@@ -28,24 +27,15 @@ const HomeScreen: React.FC = () => {
 
 	// View starts
 	return (
-		<View
-			style={{
-				flex: 1,
-				justifyContent: "center",
-				alignItems: "center",
-				backgroundColor: theme.colors.primary.light,
-			}}
-		>
-			{/* Custom Button Added */}
+		<View style={{ marginTop: 100 }}>
 			<Button
-				icon={<Close width={20} height={20} />}
+				icon={<Close width={18} height={18} />}
 				text="Custom Button"
 				backgroundColor="secondary"
 				borderColor="secondary"
 				onClick={handleButtonPress}
 				size="big"
 				mode="block"
-				showButtonLoader={false}
 			></Button>
 		</View>
 	);
