@@ -1,19 +1,22 @@
 // IMPORTS //
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from "react-native";
 
-// PLUGINS // 
+// PLUGINS //
 
 // STYLES //
-import {theme} from "./src/infrastructure/theme/theme"
+import { theme } from "./src/infrastructure/theme/theme";
 
 /** App  */
 export default function App() {
-
-  // View Starts here 
+  // View Starts here
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Open up App.tsx to start working on your app!</Text>
-      <Text style={styles.text}>Open up App.tsx to start working on your app!</Text>
+      <Text style={styles.text}>
+        Open up App.tsx to start working on your app!
+      </Text>
+      <Text style={styles.text}>
+        Open up App.tsx to start working on your app!
+      </Text>
     </View>
   );
 }
@@ -21,11 +24,11 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.colors.background.regular,  // added theme color 
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: theme.colors.background.tint, // added theme color
+    alignItems: "center",
+    justifyContent: "center",
   },
-  text:{
-    margin:theme.spacing.small  // added theme spacing
-  }
+  text: {
+    margin: theme.spacing.small, // added theme spacing
+  },
 });
