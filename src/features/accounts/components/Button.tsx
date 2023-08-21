@@ -135,7 +135,7 @@ const styles: any = StyleSheet.create({
 		borderWidth: 1.5,
 		flexDirection: "row",
 		alignItems: "center",
-		justifyContent: "center",
+		justifyContent:"space-between",
 		alignContent:"center"
 	},
 	commonButtonText: {
