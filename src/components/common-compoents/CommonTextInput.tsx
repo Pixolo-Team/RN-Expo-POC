@@ -60,7 +60,7 @@ const CommonTextInput: React.FC<CommonTextInputProps> = ({
 
   // View Starts here
   return (
-      <View style={styles.container}>
+    <View style={[styles.container, { height: multiline ? 130 : 80 }]}>
         {/* Label for TextInput */}
         {label !== "" && <Text style={styles.textboxLabel}>{label}</Text>}
 
@@ -112,7 +112,6 @@ const CommonTextInput: React.FC<CommonTextInputProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    height: 80,
     alignItems: "center",
     marginTop: 20,
     backgroundColor: "#ffffff",

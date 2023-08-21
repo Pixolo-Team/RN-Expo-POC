@@ -85,6 +85,6 @@ const styles = StyleSheet.create({
     color: "#F31700",
   },
   button: {
-    marginTop: 50,
+    marginTop: 60,
   },
 });
