@@ -61,7 +61,7 @@
 				"require": {
 					"FunctionDeclaration": true,
 					"MethodDefinition": false,
-					"ClassDeclaration": true,
+					"ClassDeclaration": false,
 					"ArrowFunctionExpression": true,
 					"FunctionExpression": false
 				}
