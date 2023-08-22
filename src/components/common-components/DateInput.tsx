@@ -103,6 +103,8 @@ const DateInput: React.FC<DateInputProps> = ({
 									onChange={onChange}
 									style={{ marginBottom: 10 }}
 								/>
+
+								{/* Button for Save the selected date in input and dismiss the modal in IOS */}
 								<TouchableOpacity
 									style={{ alignSelf: "center" }}
 									onPress={() => {

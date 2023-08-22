@@ -54,6 +54,7 @@ const HomeScreen: React.FC = () => {
 					justifyContent: "center",
 				}}
 			>
+				{/** Common DateInput */}
 				<DateInput
 					label="Select a Date"
 					placeholder="MM/DD/YYYY"
