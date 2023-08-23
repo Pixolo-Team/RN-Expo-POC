@@ -27,7 +27,7 @@ const HomeScreen: React.FC = () => {
 	// View starts here
 	return (
 		<View style={styles.container}>
-			<Text>Home Screen</Text>
+			<Text>Home Screen Works</Text>
 		</View>
 	);
 };
