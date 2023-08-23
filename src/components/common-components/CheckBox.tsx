@@ -20,6 +20,7 @@ interface CheckboxProps {
 	checked: boolean;
 	onPress: () => void;
 }
+
 /** Check box  */
 const Checkbox: React.FC<CheckboxProps> = ({ label, checked, onPress }) => {
 	return (
@@ -33,7 +34,7 @@ const Checkbox: React.FC<CheckboxProps> = ({ label, checked, onPress }) => {
 				{checked && (
 					<CheckIcon
 						style={styles.checkedIcon}
-						color={theme.colors.primary.tint}
+						color={theme.colors.primary.contrast}
 					/>
 				)}
 			</View>
@@ -46,7 +47,6 @@ const styles = StyleSheet.create({
 	checkboxContainer: {
 		flexDirection: "row",
 		alignItems: "center",
-		rowGap: theme.spacing[1],
 	},
 	checkbox: {
 		width: 16,
@@ -63,8 +63,8 @@ const styles = StyleSheet.create({
 		borderColor: theme.colors.primary.regular,
 	},
 	checkboxLabel: {
-		fontSize: theme.fontSizes.tiny,
-		color: theme.colors.primary.tint,
+		fontSize: theme.fontSizes.small,
+		color: theme.colors.dark.regular,
 	},
 	checkedIcon: {
 		width: 12,
