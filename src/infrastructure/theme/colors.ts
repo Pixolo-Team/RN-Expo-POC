@@ -26,4 +26,10 @@ export const colors = {
 		placeholder: "#FAFAFA",
 		disabled: "#FAFAFA",
 	},
+	red: {
+		regular: "#FF0000",
+		light: "#FF0000",
+		tint: "#FF0000",
+		contrast: "#FFFFFF",
+	},
 };
