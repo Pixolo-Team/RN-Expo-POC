@@ -5,7 +5,6 @@ import { View, StyleSheet, Text } from "react-native";
 // STYLES //
 
 // COMPONENTS //
-import Checkbox from "../../../components/common-components/CheckBox";
 
 // SVG //
 
@@ -25,7 +24,7 @@ const HomeScreen: React.FC = () => {
 
 	// Use Effect and Focus Effect
 
-	// View starts here
+	// View starts
 	return (
 		<View style={styles.container}>
 			<Text>Home Screen Works</Text>
