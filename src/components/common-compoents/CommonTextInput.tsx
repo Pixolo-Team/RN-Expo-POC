@@ -1,169 +1,180 @@
-// IMPORTS //
+// Can be used for Input Items, mainly in Account Screens
 import React, { useState } from "react";
 import {
-  View,
-  TextInput,
-  StyleSheet,
-  TouchableOpacity,
-  StyleProp,
-  ViewStyle,
-  Text,
+	Text,
+	StyleSheet,
+	View,
+	TextInput,
+	TouchableOpacity,
+	StyleProp,
+	ViewStyle,
+	Platform,
 } from "react-native";
 
-// SVG //
+// STYLES //
+import { theme } from "../../infrastructure/theme/theme";
+
+// COMPONENTS //
+
+// SERVICES //
+
+// UTILS //
+
+// PLUGINS //
+
+// SVG'S //
 import CloseIcon from "../../../assets/icons/close.svg";
 
-// Interface
-interface CommonTextInputProps {
-  label: string;
-  placeholder: string;
-  errorMessage?: string;
-  style?: StyleProp<ViewStyle>;
-  isError?: boolean;
-  value: string;
-  onClear?: () => void;
-  onChangeText: (text: string) => void;
-  inputType?: "text" | "password" | "email";
-  multiline?: boolean;
-  numberOfLines?: number;
-  onBlur?: () => void; // Add onBlur prop
+interface TextInputBoxProps {
+	label: string;
+	placeholder: string;
+	errorMessage?: string;
+	style?: StyleProp<ViewStyle>;
+	isError?: boolean;
+	value: string;
+	onClear?: () => void;
+	onChangeText: (text: string) => void;
+	type?: "text" | "password" | "email";
+	multiline?: boolean;
+	numberOfLines?: number;
 }
 
-// CommonTextInput Component
-const CommonTextInput: React.FC<CommonTextInputProps> = ({
-  label = "",
-  placeholder,
-  style,
-  isError = false,
-  value = "", // Use the value prop here
-  onClear,
-  onChangeText, // Use the onChangeText prop here
-  multiline = false,
-  numberOfLines = 1,
-  inputType = "text",
-  onBlur,
-  errorMessage,
+/** Text Input Box */
+const TextInputBox: React.FC<TextInputBoxProps> = ({
+	label = "",
+	placeholder,
+	errorMessage,
+	style,
+	isError = false,
+	value = "",
+	onClear,
+	onChangeText,
+	multiline = false,
+	numberOfLines = 1,
+	type = "text",
 }) => {
-  // States
-  const [isFocused, setIsFocused] = useState(false);
+	// Define Contexts
 
-  const handleFocus = () => {
-    setIsFocused(true);
-  };
+	// Define States
+	const [isFocused, setIsFocused] = useState<boolean>(false);
 
-  const handleBlur = () => {
-    setIsFocused(false);
-    if (onBlur) {
-      onBlur(); // Call onBlur if it's provided
-    }
-  };
+	// Define Refs
 
-  // View Starts here
-  return (
-    <View style={[styles.container, { height: multiline ? 130 : 80 }]}>
-        {/* Label for TextInput */}
-        {label !== "" && <Text style={styles.textboxLabel}>{label}</Text>}
+	// Helper Functions
 
-        <View style={{}}>
-          <TextInput
-            multiline={multiline}
-            numberOfLines={numberOfLines}
-            placeholder={placeholder}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-            value={value}
-            onChangeText={(text) => onChangeText(text)}
-            secureTextEntry={inputType === "password" ? true : false}
-            autoCapitalize="none"
-            style={[
-              styles.inputStyle,
-              style,
-              isFocused && styles.isFocused,
-              isError && styles.inputError,
-              multiline && styles.multiline,
-              multiline ? { height: 100 } : { height: 40 },
-            ]}
-          />
+	return (
+		<View style={style}>
+			{/* Label for Input */}
+			{label !== "" && <Text style={styles.loginLabel}>{label}</Text>}
 
-          <View style={styles.clearIconView}>
-            {/* Clear Button */}
-            {value.length > 0 && (
-              <TouchableOpacity
-                activeOpacity={0.4}
-                style={[
-                  styles.clearButton,
-                  multiline && styles.clearIconButtonForMultiline,
-                ]}
-                onPress={onClear}
-              >
-                <CloseIcon />
-              </TouchableOpacity>
-            )}
-          </View>
-        </View>
+			<View style={styles.inputFieldItem}>
+				{/* Add (isFocused) class to add boxshadow on focus and for adding red border on error add class (inputError) */}
+				<TextInput
+					style={[
+						styles.loginInput,
+						isFocused ? styles.isFocused : null,
+						isError ? styles.inputError : null,
+						multiline
+							? Platform.OS === "ios"
+								? { height: 100 }
+								: null
+							: { height: 40 },
+						multiline ? styles.multiline : null,
+					]}
+					multiline={multiline}
+					numberOfLines={numberOfLines}
+					placeholder={placeholder}
+					onFocus={() => setIsFocused(true)}
+					onBlur={() => setIsFocused(false)}
+					value={value}
+					onChangeText={(text) => onChangeText(text)}
+					secureTextEntry={type === "password" ? true : false}
+					autoCapitalize="none"
+				/>
 
-        {/* Error message */}
-        {isError && (
-          <Text style={styles.errorMessageStyle}>{errorMessage}</Text>
-        )}
-      </View>
-  );
+				<View style={styles.inputIconsWrap}>
+					{/* Clear Button */}
+					{value.length > 0 && (
+						<TouchableOpacity
+							activeOpacity={0.4}
+							style={[
+								styles.inputActionButtons,
+								multiline ? styles.inputActionButtosMultiline : null,
+							]}
+							onPress={onClear}
+						>
+							<CloseIcon />
+						</TouchableOpacity>
+					)}
+				</View>
+			</View>
+
+			{/* Error message */}
+			{errorMessage && isError && (
+				<Text style={styles.loginErrorMessage}>{errorMessage}</Text>
+			)}
+		</View>
+	);
 };
 
 const styles = StyleSheet.create({
-  container: {
-    alignItems: "center",
-    marginTop: 20,
-    backgroundColor: "#ffffff",
-    
-  },
-  clearIconView: {
-    position: "absolute",
-    right: 5,
-    top: 0,
-    flexDirection: "row",
-    alignItems: "center",
-    height: "100%",
-  },
-  inputStyle: {
-    borderColor: "#DCEFFA",
-    color: "#707070",
-    paddingHorizontal: 10,
-    borderWidth: 1,
-    borderRadius: 4,
-    fontSize: 14,
-    justifyContent: "flex-start",
-    width: 300,
-  },
-  textboxLabel: {
-    alignSelf: "flex-start",
-    fontSize: 12,
-    marginBottom: 10,
-  },
-  isFocused: {
-    borderColor: "#0277BD",
-  },
-  inputError: {
-    borderColor: "#F31700",
-  },
-  multiline: {
-    textAlignVertical: "top",
-    paddingTop: 5,
-  },
-  clearButton: {
-    alignItems: "center",
-    justifyContent: "center",
-    width: 25,
-  },
-  clearIconButtonForMultiline: {
-    justifyContent: "flex-start",
-    paddingTop: 10,
-  },
-  errorMessageStyle: {
-    fontSize: 12,
-    color: "#F31700",
-    marginTop: 4,
-  },
+	loginLabel: {
+		fontSize: theme.fontSizes.small,
+		marginBottom: theme.spacing[0],
+	},
+	inputFieldItem: {
+		position: "relative",
+	},
+	passwordContainer: {
+		marginTop: theme.spacing[4],
+	},
+	loginInput: {
+		borderColor: theme.colors.dark.light,
+		color: theme.colors.dark.regular,
+		paddingHorizontal: theme.spacing[3],
+		borderWidth: 1,
+		borderRadius: 4,
+		fontSize: theme.fontSizes.small,
+		paddingBottom: Platform.OS === "ios" ? 0 : 3,
+		justifyContent: "flex-start",
+		paddingRight: 30,
+	},
+	multiline: {
+		textAlignVertical: "top",
+		paddingTop: theme.spacing[1],
+	},
+	isFocused: {
+		borderColor: theme.colors.primary.regular,
+	},
+	inputError: {
+		borderColor: theme.colors.red.regular,
+	},
+	inputIconsWrap: {
+		position: "absolute",
+		right: 5,
+		top: 0,
+		flexDirection: "row",
+		alignItems: "center",
+		height: "100%",
+	},
+	inputActionButtons: {
+		alignItems: "center",
+		justifyContent: "center",
+		height: "100%",
+		width: 25,
+	},
+	inputActionButtosMultiline: {
+		justifyContent: "flex-start",
+		paddingTop: theme.spacing[3],
+	},
+	loginErrorMessage: {
+		fontSize: theme.fontSizes.tiny,
+		color: theme.colors.red.regular,
+		marginTop: theme.spacing.tiny,
+	},
+	loginFormError: {
+		marginTop: theme.spacing[5],
+	},
 });
 
-export default CommonTextInput;
+export default TextInputBox;
