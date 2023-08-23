@@ -46,10 +46,12 @@ const DateInput: React.FC<DateInputProps> = ({
 	minimumDate = new Date(),
 	onChangeDate,
 }) => {
+	// Define States
 	const [date, setDate] = useState<Date>(new Date());
 	const [showPicker, setShowPicker] = useState<boolean>(false);
 	const [modalVisible, setModalVisible] = useState(false);
 
+	//  Helper functions
 	/** Toggle the date picker visibility */
 	const toggleDatePicker = (): void => {
 		setShowPicker((prevState) => !prevState);
@@ -78,6 +80,7 @@ const DateInput: React.FC<DateInputProps> = ({
 		}
 	};
 
+	// View starts here
 	return (
 		<View style={style}>
 			{/* We use 2 different date picker for Android and IOS because of some UI issues */}
@@ -160,12 +163,12 @@ const DateInput: React.FC<DateInputProps> = ({
 const styles = StyleSheet.create({
 	dateLabel: {
 		fontSize: theme.fontSizes.tiny,
-		marginBottom: theme.spacing.tiny,
+		marginBottom: theme.spacing[0],
 	},
 	dateInputField: {
-		borderColor: theme.colors.border.tint,
-		color: theme.colors.text.tint,
-		paddingHorizontal: theme.spacing.regular,
+		borderColor: theme.colors.primary.tint,
+		color: theme.colors.primary.tint,
+		paddingHorizontal: theme.spacing[2],
 		borderWidth: 1,
 		borderRadius: 4,
 		fontSize: theme.fontSizes.small,
@@ -181,7 +184,7 @@ const styles = StyleSheet.create({
 		position: "absolute",
 		right: 0,
 		height: 40,
-		borderLeftColor: theme.colors.border.tint,
+		borderLeftColor: "#B3B3BA",
 		borderLeftWidth: 1,
 		width: 30,
 		justifyContent: "center",
@@ -200,7 +203,7 @@ const styles = StyleSheet.create({
 		height: 300,
 		width: "100%",
 		borderRadius: 10,
-		padding: theme.spacing.large,
+		padding: theme.spacing[3],
 	},
 	dateInputWrapClick: {
 		position: "absolute",
