@@ -10,6 +10,7 @@ import {
 } from "react-native";
 
 // STYLES //
+import { theme } from "../../infrastructure/theme/theme";
 
 // COMPONENTS //
 
@@ -23,9 +24,9 @@ import {
 
 // Interface
 interface LoaderProps {
-	visible: boolean;           // Indicates whether the loader should be visible or not.
-	text?: string;              // Optional loading text.
-	textStyle?: TextStyle;      // Optional style for the loading text.
+	visible: boolean; // Indicates whether the loader should be visible or not.
+	text?: string; // Optional loading text.
+	textStyle?: TextStyle; // Optional style for the loading text.
 	containerStyle?: ViewStyle; // Optional style for the loader container.
 }
 
@@ -36,14 +37,13 @@ const Loader: React.FC<LoaderProps> = ({
 	textStyle,
 	containerStyle,
 }) => {
-
 	// If the loader should not be visible, return null to hide it.
 	if (!visible) return null;
 
 	// Render the loader component if it should be visible.
 	return (
 		<View style={[styles.loaderContainer, containerStyle]}>
-			<ActivityIndicator size="large" color="#0000ff" />
+			<ActivityIndicator size="large" color={theme.colors.primary.regular} />
 			{text && <Text style={[styles.loaderText, textStyle]}>{text}</Text>}
 		</View>
 	);
@@ -63,8 +63,8 @@ const styles = StyleSheet.create({
 		bottom: 0,
 	},
 	loaderText: {
-		marginTop: 10,
-		fontSize: 16,
+		marginTop: theme.spacing[1],
+		fontSize: theme.fontSizes.small,
 	},
 });
 
