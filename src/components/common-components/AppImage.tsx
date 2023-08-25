@@ -2,8 +2,20 @@
 import React, { useState } from "react";
 import { Image, ImageStyle, ImageURISource } from "react-native";
 
+// STYLES //
+
+// COMPONENTS //
+
+// SERVICES //
+
+// UTILS //
+
+// PLUGINS //
+
+// SVG'S //
+
 interface AppImageProps {
-	uri: any;
+	uri: string;
 	style?: ImageStyle;
 	defaultSource: ImageURISource;
 	resizeMode?: "cover" | "contain" | "stretch" | "repeat" | "center";
@@ -15,9 +27,14 @@ const AppImage: React.FC<AppImageProps> = ({
 	defaultSource,
 	resizeMode = "cover",
 }) => {
-	// State declarations
+	// Define Contexts
+
+	// Define States
 	const [showDefault, setShowDefault] = useState<boolean>(false);
 
+	// Define Refs
+
+	// Helper Functions
 	/** Handle Load Error */
 	const handleLoadError = () => {
 		console.log("error");
