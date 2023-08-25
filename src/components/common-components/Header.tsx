@@ -1,6 +1,12 @@
 // IMPORTS //
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+	View,
+	Text,
+	StyleSheet,
+	TouchableOpacity,
+	SafeAreaView,
+} from "react-native";
 
 // STYLES //
 
@@ -11,72 +17,91 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 // UTILS //
 
 // PLUGINS //
+import { useNavigation } from "@react-navigation/native";
 
 // SVG'S //
 import Back from "../../../assets/icons/back-arrow.svg";
-import { useNavigation } from "@react-navigation/native";
 
-// interface
+// Interface
 interface HeaderProps {
 	title: string;
 	showBackButton?: boolean;
 	backFunction?: () => void;
-    gap:number;
 }
 
-/** Header */
-const Header: React.FC<HeaderProps> = ({ title, backFunction, gap = 0 }) => {
-	// states
+/** Header Component */
+const Header: React.FC<HeaderProps> = ({
+	title,
+	showBackButton = true,
+	backFunction,
+}) => {
+	// States
+
+	// Obtain the navigation object using the useNavigation hook
 	const navigation = useNavigation();
-	/** Back button */
+
+	//  Helper functions
+	/** Helper function to handle the back button press */
 	const handleBackPress = () => {
 		if (backFunction) {
+			// If a custom back function is provided, call it
 			backFunction();
 		} else {
+			// Otherwise, navigate back using the navigation object
 			navigation.goBack();
 		}
 	};
 
+	// Render the header component
 	return (
-		<View
-			style={{
-				paddingTop: gap,
-				backgroundColor: "lightgray",
-				flexDirection: "row",
-				alignItems: "center",
-				justifyContent: "space-between",
-				paddingHorizontal: 16,
-				height: 64,
-			}}
-		>
-			{backFunction && (
-				<TouchableOpacity onPress={handleBackPress}>
-					<Back height={20} width={20}/>
-				</TouchableOpacity>
-			)}
-			<Text style={{ fontSize: 20 }}>{title}</Text>
-			<View style={{ width: 24 }}></View>
-		</View>
+		<SafeAreaView>
+			<View style={styles.container}>
+				{/* Render the Back Button if showBackButton is true and backFunction is defined */}
+				{showBackButton && backFunction && (
+					<TouchableOpacity onPress={handleBackPress} style={styles.backButton}>
+						<Back height={20} width={20} />
+					</TouchableOpacity>
+				)}
+
+				{/* Render the title */}
+				<View style={styles.textAreaView}>
+					<Text style={styles.title}>{title}</Text>
+				</View>
+			</View>
+
+			{/* Render a separator line */}
+			<View
+				style={{
+					height: 0.5,
+					backgroundColor: "gray",
+					width: "95%",
+					alignSelf: "center",
+				}}
+			></View>
+		</SafeAreaView>
 	);
 };
 
+// Define the component's styles
 const styles = StyleSheet.create({
 	container: {
-		backgroundColor: "#007ACC",
-		padding: 15,
-		alignItems: "center",
-		flexDirection: "row", // Make the title and back button align horizontally
+		flexDirection: "row",
+		paddingHorizontal: 15,
+		width: "100%",
+		marginVertical: 20,
 	},
 	backButton: {
-		position: "absolute",
-		left: 10,
+		width: "8%",
+		justifyContent: "center",
+	},
+	textAreaView: {
+		width: "92%",
+		justifyContent: "center",
 	},
 	title: {
-		color: "white",
-		fontSize: 18,
-		fontWeight: "bold",
+		fontSize: 20,
 		alignSelf: "center",
-		margin: 10,
+		fontWeight: "600",
 	},
 });
 

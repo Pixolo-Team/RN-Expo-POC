@@ -10,7 +10,6 @@ import Header from "../../../components/common-components/Header";
 // SVG //
 
 // PLUGINS //
-import { useNavigation } from "@react-navigation/native";
 
 // CONTEXT //
 
@@ -19,21 +18,24 @@ const HomeScreen: React.FC = () => {
 	// Define Contexts
 
 	// Define States
-	const navigation = useNavigation();
+
 	// Define Refs
 
 	// Helper Functions
-	/** Function to handle back press */
+	/** Function to handle back press, added for testing */
 	const customBackFunction = () => {
-		// Your custom back function logic here
-		navigation.navigate("NewScreen");
+		Alert.alert("Back button pressed");
 	};
+	
 	// Use Effect and Focus Effect
 
 	// View starts
 	return (
 		<View style={styles.container}>
-			<Header title="Home" backFunction={customBackFunction} gap={10} />
+			
+			{/** Header for testing */}
+			<Header title="Header" backFunction={customBackFunction}/>
+
 			<Text>Home Screen Works</Text>
 		</View>
 	);
