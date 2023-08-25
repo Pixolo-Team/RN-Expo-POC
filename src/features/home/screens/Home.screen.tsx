@@ -1,11 +1,10 @@
 // IMPORTS //
 import React, { useState } from "react";
-import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 
 // STYLES //
 
 // COMPONENTS //
-import Loader from "../../../components/common-components/Loader";
 
 // SVG //
 
