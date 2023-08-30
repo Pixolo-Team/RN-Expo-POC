@@ -5,6 +5,7 @@ import { View, StyleSheet, Text } from "react-native";
 // STYLES //
 
 // COMPONENTS //
+import Slider from "../../../components/common-components/Slider/Slider";
 
 // SVG //
 
@@ -21,6 +22,10 @@ const HomeScreen: React.FC = () => {
 	// Define Refs
 
 	// Helper Functions
+	/** Add files to the Array */
+	const addFile = () => {
+		console.log("Add files"); // TO DO : Add code to handle adding files
+	};
 
 	// Use Effect and Focus Effect
 
@@ -28,6 +33,11 @@ const HomeScreen: React.FC = () => {
 	return (
 		<View style={styles.container}>
 			<Text>Home Screen Works</Text>
+
+			{/** Slider Component for testing */}
+			<View style={{ flex: 1, padding: 20 }}>
+				<Slider onAddFileClick={addFile} />
+			</View>
 		</View>
 	);
 };
