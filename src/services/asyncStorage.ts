@@ -9,9 +9,11 @@ export const setDataInLocalStorage = async (
   try {
     // Convert the value  to JSON for Storage//
     const serializedValue = JSON.stringify(value);
-    // Stores the serialized value in local storage//
+    
+    // Stores the serialized value in local storage
     await AsyncStorage.setItem(key, serializedValue);
-    // Returns if the operation is done sucessfully or failed//
+    
+    // Returns if the operation is done sucessfully or failed
     return true;
   } catch (error) {
     console.error(error);
@@ -32,7 +34,7 @@ export const getDataFromLocalStorage = async (
   } catch (error) {
     // It is Used For Finding Any errors if present
     console.error(error);
-    
+
     // Display any further errors if any
     throw error;
   }
