@@ -7,8 +7,11 @@ export const setDataInLocalStorage = async (
   value: string | Array<any> | object
 ): Promise<boolean> => {
   try {
+    //Convert the value  to JSON for Storage//
     const serializedValue = JSON.stringify(value);
+    //Stores the serialized value in local storage//
     await AsyncStorage.setItem(key, serializedValue);
+    //Returns if the operation is done sucessfully or failed//
     return true;
   } catch (error) {
     console.error(error);
@@ -21,10 +24,14 @@ export const getDataFromLocalStorage = async (
   key: string
 ): Promise<any | undefined> => {
   try {
+    //Gets the Serialized Value from the Local Storage//
     const value = await AsyncStorage.getItem(key);
+    //Used for Parsing the value into an object//
     return value ? JSON.parse(value) : undefined;
   } catch (error) {
+    //It is Used For Finding Any errors if present//
     console.error(error);
+    //Display any further errors if any//
     throw error;
   }
 };
@@ -40,15 +47,12 @@ export const removeDataFromLocalStorage = async (key: string): Promise<void> => 
 };
 
 /** Remove Multiple Data/Keys from Local Storage */
-export const removeMultipleDataFromLocalStorage = async (): Promise<void> => {
+export const flushLocalStorage = async (): Promise<void> => {
   try {
     // Get all keys from local storage
-    const value = await AsyncStorage.getAllKeys();
-    // Remove all local storage items except "saved_companies" and "remembered_user"
-    const filteredKeys = value.filter(
-      (key) => key !== "saved_companies" && key !== "remembered_user"
-    );
-    await AsyncStorage.multiRemove(filteredKeys);
+    const storageKeys = await AsyncStorage.getAllKeys();
+    //Waits  till all the keys are deleted//
+    await AsyncStorage.multiRemove(storageKeys);
   } catch (error) {
     console.error(error);
     throw error;
