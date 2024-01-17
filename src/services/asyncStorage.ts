@@ -7,9 +7,9 @@ export const setDataInLocalStorage = async (
   value: string | Array<any> | object
 ): Promise<boolean> => {
   try {
-    // Convert the value  to JSON for Storage//
+    // Convert the value  to JSON for Storage
     const serializedValue = JSON.stringify(value);
-    
+
     // Stores the serialized value in local storage
     await AsyncStorage.setItem(key, serializedValue);
     
