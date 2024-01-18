@@ -1,5 +1,6 @@
-// PLUGINS //
 import { Platform } from "react-native";
+
+// PLUGINS //
 import Toast from "react-native-root-toast";
 
 
