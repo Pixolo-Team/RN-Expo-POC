@@ -1,4 +1,4 @@
-//IMPORTS//
+// PLUGINS //
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 /** Sets Data in Local Storage */
@@ -7,7 +7,7 @@ export const setDataInLocalStorage = async (
   value: string | Array<any> | object
 ): Promise<boolean> => {
   try {
-    // Convert the value to string data  for the  Storage
+    // Convert the value to string data for the Storage
     const serializedValue = JSON.stringify(value);
 
     // Stores the serialized value in local storage
@@ -50,7 +50,7 @@ export const removeDataFromLocalStorage = async (key: string): Promise<void> => 
   }
 };
 
-/** Remove Multiple Data/Keys from Local Storage */
+/** Remove all the Data from Local Storage */
 export const flushLocalStorage = async (): Promise<void> => {
   try {
     // Get all keys from local storage
