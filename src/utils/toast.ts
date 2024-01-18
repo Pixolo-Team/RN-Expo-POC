@@ -14,15 +14,15 @@ export const generateToast : (message : string) => void  = (message: string) => 
 	const toastOptions = {
 		duration: toastDuration,
 		position: toastPosition,
-		backgroundColor: "#FFFFFF", //TODO , Hex assigned variables needed
-		textColor: "#202020",
+		backgroundColor: "#FFFFFF", // TODO: Hex assigned variables needed
+		textColor: "#202020", // TODO: Hex assigned variables needed
 		opacity: 1,
 		shadow: true, 
-		shadowColor: "#EDF2F5",//TODO , Hex assigned variables needed
+		shadowColor: "#EDF2F5", // TODO: Hex assigned variables needed
 		animation: true,
 		containerStyle: {
 			borderRadius: 12,
-			backgroundColor: "#E8F3F9",//TODO , Hex assigned variables needed
+			backgroundColor: "#E8F3F9", // TODO: Hex assigned variables needed
 		},
 	};
 
