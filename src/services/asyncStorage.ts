@@ -7,7 +7,7 @@ export const setDataInLocalStorage = async (
   value: string | Array<any> | object
 ): Promise<boolean> => {
   try {
-    // Convert the value  to JSON for Storage
+    // Convert the value to string for Storage
     const serializedValue = JSON.stringify(value);
 
     // Stores the serialized value in local storage
@@ -29,10 +29,10 @@ export const getDataFromLocalStorage = async (
     // Gets the Serialized Value from the Local Storage
     const value = await AsyncStorage.getItem(key);
 
-    // Used for Parsing the value into an object
+    // Used for Parsing the value into a JSON object
     return value ? JSON.parse(value) : undefined;
   } catch (error) {
-    // It is Used For Finding Any errors if present
+    // It is Used For Finding any errors if present
     console.error(error);
 
     // Display any further errors if any
