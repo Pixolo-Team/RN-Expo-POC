@@ -1,5 +1,4 @@
 import { Platform } from "react-native";
-
 // PLUGINS //
 import Toast from "react-native-root-toast";
 
@@ -7,21 +6,20 @@ import Toast from "react-native-root-toast";
 // Constants for toast options
 const toastDuration = Toast.durations.LONG;
 const toastPosition = Platform.OS === "android" ? -100 : -120;
-const toastHideDelay = 10000;
+const toastHideDelay  = 10000;
 
-/**
- * Generate and display a toast message.
- * @param {string} message - The message to display in the toast.
- */
-export const generateToast = (message: string) => {
+/** Generate and display a toast message. */
+export const generateToast : (message : string) => void  = (message: string) => {
 	// Toast options to customize appearance and behavior
 	const toastOptions = {
 		duration: toastDuration,
 		position: toastPosition,
+
 		backgroundColor: "#FFFFFF",
 		textColor: "#202020",
 		opacity: 1,
 		shadow: true,
+		//TODO , Hex assigned variables needed 
 		shadowColor: "#EDF2F5",
 		animation: true,
 		containerStyle: {
