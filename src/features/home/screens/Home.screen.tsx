@@ -1,6 +1,7 @@
 // IMPORTS //
 import React from "react";
 import { View, StyleSheet, Text } from "react-native";
+import LoginScreen from "../../accounts/screens/Login.Screen";
 
 // STYLES //
 
@@ -28,6 +29,7 @@ const HomeScreen: React.FC = () => {
 	return (
 		<View style={styles.container}>
 			<Text>Home Screen Works</Text>
+			<LoginScreen />
 		</View>
 	);
 };
