@@ -23,7 +23,7 @@ import RNPickerSelect from "react-native-picker-select";
 
 // SVG'S //
 
-// interface DropDownProps 
+// interface DropDownProps
 interface DropDownProps {
 	label: string;
 	style?: StyleProp<ViewStyle>;
@@ -42,7 +42,6 @@ const DropDown: React.FC<DropDownProps> = ({
 	onItemChange,
 	placeholder,
 }) => {
-
 	// View starts here
 	return (
 		<View style={style}>
