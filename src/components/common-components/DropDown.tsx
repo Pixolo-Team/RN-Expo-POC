@@ -22,6 +22,7 @@ import { theme } from "../../infrastructure/theme/theme";
 import RNPickerSelect from "react-native-picker-select";
 
 // SVG'S //
+import Arrow from "../../../assets/icons/dropdown-arrow.svg";
 
 // interface DropDownProps
 interface DropDownProps {
@@ -30,7 +31,7 @@ interface DropDownProps {
 	dropdownItems: { label: string; value: string }[];
 	selectedValue: string;
 	onItemChange: (text: string) => void;
-	placeholder: string;
+	placeholder: Partial<{ label: string; value: string | null }>;
 }
 
 /** Dropdown Component */
@@ -42,6 +43,11 @@ const DropDown: React.FC<DropDownProps> = ({
 	onItemChange,
 	placeholder,
 }) => {
+	/** Custom Dropdown Icon */
+	const DropdownIcon = () => {
+		return <Arrow height={10} width={10} style={styles.dropdownArrowIcon} />;
+	};
+
 	// View starts here
 	return (
 		<View style={style}>
@@ -55,6 +61,7 @@ const DropDown: React.FC<DropDownProps> = ({
 					onValueChange={(value) => onItemChange(value)}
 					items={dropdownItems}
 					placeholder={{ label: placeholder, value: null }}
+					Icon={Platform.OS === "ios" ? DropdownIcon : null}
 				/>
 			</View>
 		</View>
@@ -76,6 +83,11 @@ const styles = StyleSheet.create({
 		fontSize: theme.fontSizes.small,
 		paddingBottom: Platform.OS === "ios" ? 0 : 3,
 		justifyContent: "center",
+	},
+	dropdownArrowIcon: {
+		position: "absolute",
+		top: 3,
+		right: 3,
 	},
 });
 
