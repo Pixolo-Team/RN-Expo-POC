@@ -1,8 +1,7 @@
 // IMPORTS //
+import { useNavigation, useRoute } from "@react-navigation/native";
 import React from "react";
 import { View, StyleSheet, Text,Button } from "react-native";
-import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer, useNavigation } from "@react-navigation/native";
 
 // STYLES //
 
@@ -15,8 +14,10 @@ import { NavigationContainer, useNavigation } from "@react-navigation/native";
 // CONTEXT //
 
 /** Home screen component */
-const HomeScreen: React.FC = () => {
-	const nav=useNavigation();
+const About: React.FC = () => {
+	const nav=useNavigation()
+	const route=useRoute();
+	const {name}=route.params;
 	// Define Contexts
 
 	// Define States
@@ -30,8 +31,8 @@ const HomeScreen: React.FC = () => {
 	// View starts
 	return (
 		<View style={styles.container}>
-			<Text style={styles.font}>Home Screen Works</Text>
-			<Button title="To Next Page" onPress={()=>nav.push("About",{name:"Pratham"})} />
+			<Text style={styles.font}>About us</Text>
+			<Button title={name} onPress={()=>nav.goBack()} />
 		</View>
 	);
 };
@@ -51,4 +52,4 @@ const styles = StyleSheet.create({
 	}
 });
 
-export default HomeScreen;
+export default About;
