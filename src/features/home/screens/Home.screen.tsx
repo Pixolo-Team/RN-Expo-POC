@@ -24,7 +24,7 @@ const HomeScreen: React.FC = () => {
 
 	// Use Effect and Focus Effect
 
-	// View starts here
+	// View starts
 	return (
 		<View style={styles.container}>
 			<Text>Home Screen Works</Text>
