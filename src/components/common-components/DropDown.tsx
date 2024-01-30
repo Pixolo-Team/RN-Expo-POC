@@ -1,4 +1,3 @@
-// IMPORTS //
 import React from "react";
 import {
 	Text,
@@ -22,15 +21,14 @@ import { theme } from "../../infrastructure/theme/theme";
 import RNPickerSelect from "react-native-picker-select";
 
 // SVG'S //
-import Arrow from "../../../assets/icons/dropdown-arrow.svg";
+import Back from "../../../assets/icons/dropdown-arrow.svg";
 
-// interface DropDownProps
 interface DropDownProps {
 	label: string;
 	style?: StyleProp<ViewStyle>;
 	dropdownItems: { label: string; value: string }[];
 	selectedValue: string;
-	onItemChange: (text: string) => void;
+	onItemChange: (text: string, label?: string) => void;
 	placeholder: Partial<{ label: string; value: string | null }>;
 }
 
@@ -45,10 +43,9 @@ const DropDown: React.FC<DropDownProps> = ({
 }) => {
 	/** Custom Dropdown Icon */
 	const DropdownIcon = () => {
-		return <Arrow height={10} width={10} style={styles.dropdownArrowIcon} />;
+		return <Back height={10} width={10} style={styles.dropdownArrowIcon} />;
 	};
 
-	// View starts here
 	return (
 		<View style={style}>
 			{/* Label for Dropdown */}
@@ -58,10 +55,13 @@ const DropDown: React.FC<DropDownProps> = ({
 			<View style={styles.dropDownField}>
 				<RNPickerSelect
 					value={selectedValue}
-					onValueChange={(value) => onItemChange(value)}
+					onValueChange={(value, index) => {
+						const itemIndex = Object.keys(placeholder).length === 0 ? index : 0;
+						onItemChange(value, dropdownItems[itemIndex].label);
+					}}
 					items={dropdownItems}
-					placeholder={{ label: placeholder, value: null }}
-					Icon={Platform.OS === "ios" ? DropdownIcon : null}
+					placeholder={placeholder}
+					Icon={Platform.OS === "ios" ? DropdownIcon : undefined}
 				/>
 			</View>
 		</View>
@@ -71,18 +71,19 @@ const DropDown: React.FC<DropDownProps> = ({
 const styles = StyleSheet.create({
 	dropDownLabel: {
 		fontSize: theme.fontSizes.tiny,
-		marginBottom: theme.spacing[0],
+		marginBottom: theme.spacing.tiny,
 	},
 	dropDownField: {
-		borderColor: theme.colors.primary.tint,
-		color: theme.colors.primary.tint,
-		paddingHorizontal: Platform.OS === "ios" ? theme.spacing[2] : 0,
+		borderColor: theme.colors.dark.tint,
+		color: theme.colors.dark.tint,
+		paddingHorizontal: Platform.OS === "ios" ? theme.spacing.regular : 0,
 		height: 40,
 		borderWidth: 1,
 		borderRadius: 4,
 		fontSize: theme.fontSizes.small,
 		paddingBottom: Platform.OS === "ios" ? 0 : 3,
 		justifyContent: "center",
+		position: "relative",
 	},
 	dropdownArrowIcon: {
 		position: "absolute",
