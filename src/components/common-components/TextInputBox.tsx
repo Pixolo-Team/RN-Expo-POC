@@ -5,7 +5,6 @@ import {
 	StyleSheet,
 	View,
 	TextInput,
-	TouchableOpacity,
 	StyleProp,
 	ViewStyle,
 	Platform,
@@ -24,6 +23,7 @@ import { theme } from "../../infrastructure/theme/theme";
 
 // SVG'S //
 import CloseIcon from "../../../assets/icons/close.svg";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 interface TextInputBoxProps {
 	label: string;

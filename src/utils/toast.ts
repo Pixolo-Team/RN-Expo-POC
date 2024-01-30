@@ -14,8 +14,8 @@ export const generateToast : (message : string) => void  = (message: string) => 
 	const toastOptions = {
 		duration: toastDuration,
 		position: toastPosition,
-		backgroundColor: "#FFFFFF", // TODO: Use color variable here
-		textColor: "#202020", // TODO: Use color variable here
+		backgroundColor: "#000000", // TODO: Use color variable here
+		textColor: "#fff", // TODO: Use color variable here
 		opacity: 1,
 		shadow: true, 
 		shadowColor: "#EDF2F5", // TODO: Use color variable here
