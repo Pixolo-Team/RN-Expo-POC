@@ -23,7 +23,12 @@ import RNPickerSelect from "react-native-picker-select";
 // SVG'S //
 import Back from "../../../assets/icons/dropdown-arrow.svg";
 
-interface DropDownProps {
+/** Custom Dropdown Icon */
+const DropdownIcon = () => {
+	return <Back height={10} width={10} style={styles.dropdownArrowIcon} />;
+};
+
+interface DropdownProps {
 	label: string;
 	style?: StyleProp<ViewStyle>;
 	dropdownItems: { label: string; value: string }[];
@@ -33,7 +38,7 @@ interface DropDownProps {
 }
 
 /** Dropdown Component */
-const DropDown: React.FC<DropDownProps> = ({
+const Dropdown: React.FC<DropdownProps> = ({
 	label,
 	style,
 	dropdownItems,
@@ -41,18 +46,13 @@ const DropDown: React.FC<DropDownProps> = ({
 	onItemChange,
 	placeholder,
 }) => {
-	/** Custom Dropdown Icon */
-	const DropdownIcon = () => {
-		return <Back height={10} width={10} style={styles.dropdownArrowIcon} />;
-	};
-
 	return (
 		<View style={style}>
 			{/* Label for Dropdown */}
-			<Text style={styles.dropDownLabel}>{label}</Text>
+			<Text style={styles.dropdownLabel}>{label}</Text>
 
 			{/* Dropdown Field */}
-			<View style={styles.dropDownField}>
+			<View style={styles.dropdownField}>
 				<RNPickerSelect
 					value={selectedValue}
 					onValueChange={(value, index) => {
@@ -61,7 +61,7 @@ const DropDown: React.FC<DropDownProps> = ({
 					}}
 					items={dropdownItems}
 					placeholder={placeholder}
-					Icon={Platform.OS === "ios" ? DropdownIcon : undefined}
+					Icon={Platform.OS === "ios" && <DropdownIcon />}
 				/>
 			</View>
 		</View>
@@ -69,11 +69,11 @@ const DropDown: React.FC<DropDownProps> = ({
 };
 
 const styles = StyleSheet.create({
-	dropDownLabel: {
+	dropdownLabel: {
 		fontSize: theme.fontSizes.tiny,
 		marginBottom: theme.spacing.tiny,
 	},
-	dropDownField: {
+	dropdownField: {
 		borderColor: theme.colors.dark.tint,
 		color: theme.colors.dark.tint,
 		paddingHorizontal: Platform.OS === "ios" ? theme.spacing.regular : 0,
@@ -92,4 +92,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default DropDown;
+export default Dropdown;
