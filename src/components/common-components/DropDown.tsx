@@ -61,7 +61,7 @@ const Dropdown: React.FC<DropdownProps> = ({
 					}}
 					items={dropdownItems}
 					placeholder={placeholder}
-					Icon={Platform.OS === "ios" && <DropdownIcon />}
+					Icon={Platform.OS === "ios" ? DropdownIcon : null}
 				/>
 			</View>
 		</View>
@@ -87,8 +87,8 @@ const styles = StyleSheet.create({
 	},
 	dropdownArrowIcon: {
 		position: "absolute",
-		top: 3,
-		right: 3,
+		top: 2,
+		right: 10,
 	},
 });
 
