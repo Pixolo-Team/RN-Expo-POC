@@ -97,7 +97,7 @@ export const verifyTokenRequest = async (
 		// Set up the API Call Config
 		const config: AxiosRequestConfig = {
 			method: "get",
-			url: `${API_URL}users/verifyToken`,
+			url: `${API_URL}dummy/verify-token.php`,
 			headers: {
 				"Content-Type": "application/json",
 				Authorization: token,

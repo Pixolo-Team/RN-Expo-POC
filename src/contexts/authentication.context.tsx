@@ -5,16 +5,14 @@ import {
 	getDataFromAsyncStorage,
 	removeDataFromAsyncStorage,
 } from "../services/cache";
-import { logoutRequest, verifyTokenRequest } from "../services/api/users";
+import { verifyTokenRequest } from "../services/api/users";
 
 // CONTEXTS //
 import { useUserContext } from "./user.context";
 
 // UTILS //
-import { CONSTANTS } from "../infrastructure/constants";
 
 // PLUGINS //
-import { androidId, getIosIdForVendorAsync } from "expo-application";
 
 // TYPES //
 import { UserData } from "../types/user";
@@ -95,7 +93,10 @@ export const AuthenticationProvider: React.FC<AuthenticationProviderProps> = ({
 
 				if (response.status) {
 					// Every time user logs in new data will be fetched
-					const userData = { ...(response.data as unknown as UserData), token: token };
+					const userData = {
+						...(response.data as unknown as UserData),
+						token: token,
+					};
 					setUser(userData);
 					setIsAuthenticated(true);
 				} else {
