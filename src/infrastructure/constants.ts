@@ -14,3 +14,5 @@ export const CONSTANTS = {
 };
 
 export const API_URL = "https://api.pixoloproductions.com/";
+
+export const PROJECT_ID = "f1f198ea-f5cd-49f4-9edf-eaa985d015d5";

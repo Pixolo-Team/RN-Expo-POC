@@ -1,8 +1,11 @@
 import React from "react";
 
 // NAVIGATION //
-import AppNavigation from "./src/infrastructure/navigation/AuthStack";
-import { NavigationContainer } from "@react-navigation/native";
+import AppNavigation from "./src/infrastructure/navigation/AppNavigation";
+
+// PROVIDERS //
+import { UserProvider } from "./src/contexts/user.context";
+import { AuthenticationProvider } from "./src/contexts/authentication.context";
 
 // PROVIDERS //
 
@@ -31,9 +34,11 @@ const App: React.FC = () => {
 	// Use Effect and Focus Effect
 
 	return (
-		<NavigationContainer>
-			<AppNavigation />
-		</NavigationContainer>
+		<UserProvider>
+			<AuthenticationProvider>
+				<AppNavigation />
+			</AuthenticationProvider>
+		</UserProvider>
 	);
 };
 
