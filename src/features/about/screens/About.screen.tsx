@@ -1,6 +1,6 @@
 // IMPORTS //
-import { useNavigation, useRoute } from "@react-navigation/native";
 import React from "react";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { View, StyleSheet, Text,Button } from "react-native";
 
 // STYLES //
@@ -15,7 +15,7 @@ import { View, StyleSheet, Text,Button } from "react-native";
 
 /** Home screen component */
 const About: React.FC = () => {
-	const nav=useNavigation()
+	const nav=useNavigation();
 	const route=useRoute();
 	const {name}=route.params;
 	// Define Contexts
@@ -40,11 +40,11 @@ const About: React.FC = () => {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		justifyContent:'center'
+		justifyContent:"center",
 	},
 	font:{
-		color:'red',
-		textAlign:'center',
+		color:"red",
+		textAlign:"center",
 		margin:20
 	},
 	button:{

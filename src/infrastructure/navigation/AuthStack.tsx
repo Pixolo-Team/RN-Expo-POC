@@ -1,18 +1,16 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-
-// SCREENS //
 import HomeScreen from "../../features/home/screens/Home.screen";
 import About from "../../features/about/screens/About.screen";
 import { useNavigation } from "@react-navigation/native";
 import SignupScreen from "../../features/accounts/screens/Signup.Screen";
 
-const AuthStack = createStackNavigator();
+// SCREENS //
 
+const AuthStack = createStackNavigator();
 
 /** Create the Navigation for the Auth Stack */
 const AuthStackScreen: React.FC = () => {
-	const nav2=useNavigation();
 	return (
 		<AuthStack.Navigator initialRouteName={"Sign"} >
 			<AuthStack.Screen

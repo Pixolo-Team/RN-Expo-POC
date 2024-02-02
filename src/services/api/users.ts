@@ -9,7 +9,6 @@ export const signUpRequest = async (
 	secondNameInput: string,
 	emailInput:string,
 	numberInput:string
-
 ): Promise<ApiResponseData<UserData>> => {
 	try {
 		// Set up the API Call Config

@@ -9,9 +9,11 @@ import {
 	ViewStyle,
 	Platform,
 } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { theme } from "../../infrastructure/theme/theme";
+import CloseIcon from "../../../assets/icons/close.svg";
 
 // STYLES //
-import { theme } from "../../infrastructure/theme/theme";
 
 // COMPONENTS //
 
@@ -22,8 +24,6 @@ import { theme } from "../../infrastructure/theme/theme";
 // PLUGINS //
 
 // SVG'S //
-import CloseIcon from "../../../assets/icons/close.svg";
-import { TouchableOpacity } from "react-native-gesture-handler";
 
 interface TextInputBoxProps {
 	label: string;

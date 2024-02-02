@@ -4,20 +4,24 @@ import { View, ScrollView, StyleSheet, Text, Button } from "react-native";
 import TextInputBox from "../../../components/common-components/TextInputBox";
 import { signUpRequest } from "../../../services/api/users";
 import { generateToast } from "../../../utils/toast";
+import { validateEmail } from "../../../utils/validation.util";
 
 // STYLES //
+import { signupStyles } from "./components/signup.styles";
 
 // CONTEXT //
 
-/** Home screen component */
+/** Sign up screen component */
 const SignupScreen: React.FC = () => {
-	//Usestates for forms//
+	// Usestates for forms //
 	const [FormInputs, setFormInputs] = useState({
 		name: "",
 		lastName: "",
 		email: "",
 		phone: "",
 	});
+
+	// Usestates for Errors //
 	const [FormErrors, setFormErrors] = useState({
 		name: "",
 		lastName: "",
@@ -25,7 +29,8 @@ const SignupScreen: React.FC = () => {
 		phone: "",
 		errormessage: "",
 	});
-	/** Function which resets the error to basic value */
+
+	/** Function which resets the error back to the initial value */
 	const resetErrors = () => {
 		setFormErrors({
 			name: "",
@@ -35,26 +40,29 @@ const SignupScreen: React.FC = () => {
 			errormessage: "",
 		});
 	};
-	/**Function to check email validity */
-	const validateEmail = (email: string) => {
-		// Regular expression to validate email format
-		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-		return emailRegex.test(email);
-	};
 
+	/**Function to check number validity */
+	const isNumeric = (str: string) => {
+		// Regular expression to validate email format
+		return /^\d+$/.test(str);
+	};
+	
 	/** Function which checks the validity */
-	const validateInputs = () => {
+	const validateSignupFormInputs = () => {
 		let valid = true;
+		/**Validates the Name Input Field */
 		if(FormInputs.name ===""){
 			setFormErrors((pastErrors)=>({...pastErrors,name:"You need to enter a name"}));
 			valid=false;
 		}
-
+		
+		/**Validates the Last Name Input Field */
 		if (FormInputs.lastName === "") {
 			setFormErrors((pastErrors)=>({...pastErrors,lastName:"You need to enter you last name"}));
 			valid=false;
 		} 
-
+		
+		/**Validates the email Input Field */
 		if (FormInputs.email === "" ) {
 			setFormErrors((pastErrors)=>({...pastErrors,email:"You need to enter an email address"}));
 			valid=false;
@@ -63,22 +71,19 @@ const SignupScreen: React.FC = () => {
 			valid = false;
 		}
 
-		if (FormInputs.phone === "") {
-			setFormErrors((pastErrors)=>({...pastErrors,phone:"You need to enter a Phone number"}));
-			valid = false;
-		}else if (FormInputs.phone.length < 10) {
-			setFormErrors((pastErrors) => ({ ...pastErrors, phone: "Phone number invalid" }));
-			valid = false;
-		} else if (!/^\d+$/.test(FormInputs.phone)) {
-			setFormErrors((pastErrors) => ({ ...pastErrors, phone: "Phone number must contain only numeric characters" }));
+		/**Validates the Phone Input Field */
+		if (FormInputs.phone === "" || FormInputs.phone.length < 10 || !isNumeric(FormInputs.phone)) {
+			setFormErrors((pastErrors)=>({...pastErrors,phone:"Invalid Phone number"}));
 			valid = false;
 		}
 		return valid;
 	};
+	
 	/** Function which checks the validity */
 	const handleClick = async () => {
+	/** Resets the error messages */
 		resetErrors();
-		if (validateInputs()) {
+		if (validateSignupFormInputs()) {
 			try {
 				const signResponse = await signUpRequest(FormInputs.name, FormInputs.lastName, FormInputs.email, FormInputs.phone);
 				if (signResponse.status) {
@@ -91,13 +96,14 @@ const SignupScreen: React.FC = () => {
 			}
 		}
 	};
-
+	// View starts
 	return (
 		<ScrollView>
-			<View style={styles.main}>
-				<Text style={styles.text}>Sign up</Text>
+			<View style={signupStyles.main}>
+				<Text style={signupStyles.text}>Sign up</Text>
 				<TextInputBox
-					style={styles.box}
+				/** Input for First Name */
+					style={signupStyles.inputBox}
 					label="First Name"
 					placeholder="Enter Your First Name"
 					onChangeText={(e) => setFormInputs((inputs) => ({ ...inputs, name: e }))}
@@ -108,7 +114,8 @@ const SignupScreen: React.FC = () => {
 					errorMessage={FormErrors.name}
 				/>
 				<TextInputBox
-					style={styles.box}
+				/** Input for Last Name */
+					style={signupStyles.inputBox}
 					label="Second Name"
 					placeholder="Enter Your Second Name"
 					onChangeText={(e) =>
@@ -121,7 +128,8 @@ const SignupScreen: React.FC = () => {
 					errorMessage={FormErrors.lastName}
 				/>
 				<TextInputBox
-					style={styles.box}
+				/** Input for Last Name */
+					style={signupStyles.inputBox}
 					label="Email"
 					placeholder="Enter Your Email Address"
 					onChangeText={(e) => setFormInputs((inputs) => ({ ...inputs, email: e }))}
@@ -132,7 +140,8 @@ const SignupScreen: React.FC = () => {
 					errorMessage={FormErrors.email}
 				/>
 				<TextInputBox
-					style={styles.box}
+				/** Input for Phone number */
+					style={signupStyles.inputBox}
 					label="Phone"
 					placeholder="Enter Your Phone"
 					onChangeText={(e) => setFormInputs((inputs) => ({ ...inputs, phone: e }))}
@@ -142,31 +151,12 @@ const SignupScreen: React.FC = () => {
 					isError={FormErrors.phone !== ""}
 					errorMessage={FormErrors.phone}
 				/>
-				<View style={styles.box}>
+				<View style={signupStyles.inputBox}>
 					<Button title="Submit" color={"black"} onPress={handleClick} />
 				</View>
 			</View>
 		</ScrollView>
 	);
 };
-
-const styles = StyleSheet.create({
-	main: {
-		borderWidth: 2,
-		borderStyle: "solid",
-		borderColor: "black",
-		borderRadius: 10,
-		marginTop: 200,
-	},
-	text: {
-		textAlign: "center",
-		fontSize: 20,
-		fontWeight: "700",
-		margin: 10,
-	},
-	box: {
-		margin: 15,
-	},
-});
 
 export default SignupScreen;
