@@ -1,4 +1,3 @@
-// Can be used for Input Items, mainly in Account Screens
 import React, { useState } from "react";
 import {
 	Text,
@@ -9,13 +8,12 @@ import {
 	ViewStyle,
 	Platform,
 } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { theme } from "../../infrastructure/theme/theme";
-import CloseIcon from "../../../assets/icons/close.svg";
 
 // STYLES //
+import { theme } from "../../infrastructure/theme/theme";
 
 // COMPONENTS //
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 // SERVICES //
 
@@ -24,6 +22,7 @@ import CloseIcon from "../../../assets/icons/close.svg";
 // PLUGINS //
 
 // SVG'S //
+import CloseIcon from "../../../assets/icons/close.svg";
 
 interface TextInputBoxProps {
 	label: string;

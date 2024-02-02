@@ -1,6 +1,6 @@
 // IMPORTS //
 import React from "react";
-import { View, StyleSheet, Text,Button } from "react-native";
+import { View, Text,Button } from "react-native";
 
 // STYLES //
 import { styles } from "../components/home.styles";
@@ -15,7 +15,6 @@ import { styles } from "../components/home.styles";
 
 /** Home screen component */
 const HomeScreen: React.FC = () => {
-	const navigation=useNavigation();
 	// Define Contexts
 
 	// Define States
@@ -30,7 +29,6 @@ const HomeScreen: React.FC = () => {
 	return (
 		<View style={styles.container}>
 			<Text style={styles.font}>Home Screen Works</Text>
-			<Button title="To Next Page" onPress={()=>navigation.push("About",{name:"Pratham"})} />
 		</View>
 	);
 };
