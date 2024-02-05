@@ -15,7 +15,7 @@ import TextInputBox from "../../../components/common-components/TextInputBox";
 // API SERVICES //
 
 // UTILS //
-import { isNumeric, validateEmail } from "../../../utils/validation.util";
+import { isNumericWithMinDigits, validateEmail } from "../../../utils/validation.util";
 import { createUserRequest } from "../../../services/api/users";
 
 /** Sign up screen component */
@@ -86,7 +86,7 @@ const SignUpScreen: React.FC = () => {
 		// Validates the Phone Input Field
 		if (
 			formInputs.phone_number === "" ||
-			!isNumeric(formInputs.phone_number ?? "")
+			!isNumericWithMinDigits(formInputs.phone_number ?? "")
 		) {
 			setFormErrors((pastErrors) => ({
 				...pastErrors,

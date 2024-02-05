@@ -5,8 +5,8 @@ export const validateEmail = (email: string) => {
 	return emailRegex.test(email);
 };
 
-/** Function to check number validity */
-export const isNumeric = (str: string) => {
-	// Regular expression to validate email format
+/** Function to check if the input string is a numeric value with at least 10 digits. */
+export const isNumericWithMinDigits = (str: string): boolean => {
+	// Regular expression to validate that the string is numeric and has at least 10 digits
 	return /^\d{10,}$/.test(str);
 };
