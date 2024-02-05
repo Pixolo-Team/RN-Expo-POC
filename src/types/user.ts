@@ -1,4 +1,3 @@
-
 export interface Device {
 	id?: string;
 	device_id: string | null; // Unique ID of the device
@@ -9,10 +8,18 @@ export interface Device {
 	status?: 0 | 1; // 0?: Logged Out, 1?: Logged In
 }
 
-export type UserData = {
-	user_id: number;
+type UserData = {
+	_id?: string;
+	devices?: Device[];
+	dob?: Date;
 	email: string;
+	phone_number?: string;
 	first_name: string;
-	last_name: string;
+	last_name?: string;
+	profile_photo?: string; // Relative path
+	password?: string;
 	token: string;
+	username?: string;
 };
+
+export { UserData };
