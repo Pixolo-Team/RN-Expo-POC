@@ -7,21 +7,15 @@ interface Device {
 	platform?: string;
 	status?: 0 | 1; // 0?: Logged Out, 1?: Logged In
 }
-interface ContactInfo {
-	email?: string;
-	phone_number?: string;
-}
 
 type UserData = {
 	_id?: string;
-	bio?: string;
-	contact_info?: ContactInfo;
 	devices?: Device[];
 	dob?: Date;
 	email?: string;
+	phone_number: string;
 	first_name?: string;
 	last_name?: string;
-	login_type?: 1 | 2; // 1?: username
 	profile_photo?: string; // Relative path
 	password?: string;
 	token: string;
@@ -41,4 +35,4 @@ type LoginApiData = {
 	token: string;
 };
 
-export { ContactInfo, Device, UserCoreData, UserData, LoginApiData };
+export { Device, UserCoreData, UserData, LoginApiData };
