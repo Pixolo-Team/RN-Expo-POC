@@ -1,6 +1,6 @@
 // IMPORTS //
 import React from "react";
-import { View, Text,Button } from "react-native";
+import { View, Text } from "react-native";
 
 // STYLES //
 import { styles } from "../components/home.styles";
@@ -27,8 +27,8 @@ const HomeScreen: React.FC = () => {
 
 	// View starts
 	return (
-		<View style={styles.container}>
-			<Text style={styles.font}>Home Screen Works</Text>
+		<View>
+			<Text>Home Screen Works</Text>
 		</View>
 	);
 };
