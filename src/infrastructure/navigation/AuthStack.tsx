@@ -6,7 +6,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 // SCREENS //
 import HomeScreen from "../../features/home/screens/Home.screen";
-import SignUpScreen from "../../features/accounts/screens/SignUp.screen";
+import SignUpScreen from "../../features/account/screens/Signup.Screen";
 
 const AuthStack = createStackNavigator();
 
