@@ -13,26 +13,20 @@ type UserData = {
 	devices?: Device[];
 	dob?: Date;
 	email?: string;
-	phone_number: string;
+	phone_number?: string;
 	first_name?: string;
 	last_name?: string;
 	profile_photo?: string; // Relative path
 	password?: string;
-	token: string;
 	username?: string;
 };
 
 interface UserCoreData {
+	user_id: string;
 	first_name: string;
 	last_name: string;
 	profile_photo: string;
-	user_id: string;
 	username: string;
 }
 
-type LoginApiData = {
-	user: UserCoreData;
-	token: string;
-};
-
-export { Device, UserCoreData, UserData, LoginApiData };
+export { Device, UserCoreData, UserData };

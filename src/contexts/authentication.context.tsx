@@ -1,35 +1,40 @@
-import React, { useEffect, useState } from "react";
+// REACT //
+import React, { useEffect, useMemo, useState } from "react";
+
+// TYPES //
+import { UserData } from "../types/users";
+import { ApiResponseData } from "../types/app";
+import { LoginInputData } from "../types/account";
+
+// ENUMS //
+import { LocalStorageKeys } from "../enums/local-storage";
+
+// API SERVICES //
+import {
+	loginRequest,
+	logoutRequest,
+	verifyTokenRequest,
+} from "../services/api/users.api-service";
 
 // SERVICES //
 import {
-	getDataFromAsyncStorage,
-	removeDataFromAsyncStorage,
-} from "../services/cache";
-import { verifyTokenRequest } from "../services/api/users";
+	flushLocalStorage,
+	getDataFromLocalStorage,
+	setDataInLocalStorage,
+} from "../services/local-storage.service";
 
 // CONTEXTS //
 import { useUserContext } from "./user.context";
 
-// UTILS //
-
-// PLUGINS //
-
-// TYPES //
-import { UserData } from "../types/user";
-
 // Define all the state you want to share globally here
 type AuthenticationState = {
 	isAuthenticated: boolean;
-	isLoading: boolean;
-	isVerifyingUser: boolean;
+	isAuthLoading: boolean;
 };
 
 type AuthenticationContextType = AuthenticationState & {
-	setIsAuthenticated: (data: boolean) => void;
-	setIsLoading: (data: boolean) => void;
-	setIsVerifyingUser: (data: boolean) => void;
-	loginUser: (userObject: UserData) => void;
-	logout: () => void;
+	login: (user: LoginInputData) => Promise<{ status: boolean; message: string }>;
+	logout: () => Promise<void>;
 	// Define setters for your other state here
 };
 
@@ -59,57 +64,111 @@ export const AuthenticationProvider: React.FC<AuthenticationProviderProps> = ({
 }) => {
 	// Define States
 	const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [isVerifyingUser, setIsVerifyingUser] = useState<boolean>(false);
+	const [isAuthLoading, setIsAuthLoading] = useState<boolean>(false);
 
 	// Define Contexts
 	const { user, setUser } = useUserContext();
 
 	// Helper Functions
-	/** Logout the User */
-	const logout = async () => {
-		// Make the Logout API Request
+	/** Logout the User Locally (within the App) */
+	const logoutLocally = (): void => {
 		setIsAuthenticated(false);
 		setUser(null);
-		removeDataFromAsyncStorage("user");
+		flushLocalStorage();
+	};
+
+	/** Logout the User */
+	const logout = async (): Promise<void> => {
+		// Make the Logout API Request
+		logoutRequest(user?._id ?? "")
+			.then((response: ApiResponseData<boolean>) => {
+				if (response.status) {
+					// Logout the User from the App (Locally on Phone)
+					logoutLocally();
+				}
+			})
+			.catch((error: any) => {
+				console.log(error);
+			});
 	};
 
 	/** Login a User */
-	const loginUser = async (userObject: UserData) => {
-		setUser(userObject);
+	const login = async (
+		userInput: LoginInputData
+	): Promise<{ status: boolean; message: string }> => {
+		// Set the verifying user state to true
+		setIsAuthLoading(true);
+
+		// Make API Call to login the User
+		try {
+			const loginResponse = await loginRequest(
+				userInput.email_input ?? "",
+				userInput.password_input ?? ""
+			);
+			if (loginResponse.status) {
+				// Login the User locally within the App
+				loginLocally(loginResponse.data.user, loginResponse.data.token);
+				setIsAuthLoading(false);
+				return {
+					status: true,
+					message: "User Logged In Successfully",
+				};
+			} else {
+				// If the User was not successfully Logged In
+				setIsAuthLoading(false);
+				return {
+					status: false,
+					message: "User not Logged In",
+				};
+			}
+		} catch (error: any) {
+			// If the API returned an unexpected Error
+			console.log(error);
+			setIsAuthLoading(false);
+			return {
+				status: false,
+				message: "Error Logging In",
+			};
+		}
+	};
+
+	/** Login the Usr Locally (within the App) */
+	const loginLocally = async (user: UserData, token: string) => {
+		// Save the User and Token to Local Storage
+		await setDataInLocalStorage(LocalStorageKeys.USER, user);
+		await setDataInLocalStorage(LocalStorageKeys.TOKEN, token);
+		setUser(user);
 		setIsAuthenticated(true);
 	};
 
 	/** Check if the user is logged in */
 	const checkLoggedIn = async () => {
 		try {
-			// Check if the user is logged in
-			setIsVerifyingUser(true);
-			const userObject = await getDataFromAsyncStorage("user");
+			// Start the Verification Pro
+			setIsAuthLoading(true);
+			const userObject = await getDataFromLocalStorage(LocalStorageKeys.USER);
+			const token = await getDataFromLocalStorage(LocalStorageKeys.TOKEN);
 
-			if (userObject && userObject.token) {
-				const token = userObject.token;
-				const response = await verifyTokenRequest(token);
-
-				if (response.status) {
-					// Every time user logs in new data will be fetched
-					const userData = {
-						...(response.data as unknown as UserData),
-						token: token,
-					};
-					setUser(userData);
-					setIsAuthenticated(true);
-				} else {
-					// If the Token is invalid then Logout the user
-					logout();
-				}
+			if (userObject && token) {
+				// Verify the token
+				verifyTokenRequest(token)
+					.then((response: ApiResponseData<UserData>) => {
+						// Stop the Verification Loader
+						setIsAuthLoading(false);
+						if (response.status) {
+							loginLocally(response.data, token);
+						} else {
+							logout();
+						}
+					})
+					.catch((error: any) => {
+						console.log(error);
+					});
 			}
-
-			setIsVerifyingUser(false);
 		} catch (error) {
 			// Handle any errors that occur during the asynchronous operations
 			console.error("Error checking login:", error);
-			setIsVerifyingUser(false);
+			setIsAuthLoading(false);
 		}
 	};
 
@@ -119,17 +178,16 @@ export const AuthenticationProvider: React.FC<AuthenticationProviderProps> = ({
 	}, []);
 
 	// Add the setters to the value passed to the provider
-	const value: AuthenticationContextType = {
-		isAuthenticated,
-		setIsAuthenticated,
-		isLoading,
-		setIsLoading,
-		isVerifyingUser,
-		setIsVerifyingUser,
-		loginUser,
-		logout,
-		// Add your other state and setters here
-	};
+	const value = useMemo<AuthenticationContextType>(
+		() => ({
+			isAuthenticated,
+			isAuthLoading,
+			login,
+			logout,
+			// Add your other state and setters here
+		}),
+		[isAuthenticated, isAuthLoading, login, logout] // Dependency array
+	);
 
 	return (
 		<AuthenticationContext.Provider value={value}>

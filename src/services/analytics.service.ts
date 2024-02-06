@@ -1,16 +1,18 @@
+// PLUGINS //
 import analytics from "@react-native-firebase/analytics";
-import Constants from "expo-constants";
-
-// SERVICES //
-import { getDataFromAsyncStorage } from "./cache";
 
 // ENUMS //
+import { LocalStorageKeys } from "../enums/local-storage";
 
-// TYPES //
+// SERVICES //
+import { getDataFromLocalStorage } from "./local-storage.service";
+
+// UTILS //
+import Constants from "expo-constants";
 
 /** Will log the analytics screen view event */
 export const logPageViewEvent = async (pageName: string) => {
-	const userId = (await getDataFromAsyncStorage("user"))._id;
+	const userId = (await getDataFromLocalStorage(LocalStorageKeys.USER))._id;
 	// Constants.appOwnership !== "expo" && analytics().logEvent("screen_view", {
 	// 	user: userId,
 	// 	screen: pageName,

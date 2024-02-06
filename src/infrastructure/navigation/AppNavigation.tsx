@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { StatusBar } from "react-native";
 
 // NAVIGATION //
@@ -26,9 +26,9 @@ const RootStack = createStackNavigator();
 /** App Navigation */
 const AppNavigation = () => {
 	// Define Contexts
-	const { isAuthenticated, isVerifyingUser } = useAuthenticationContext();
+	const { isAuthenticated, isAuthLoading } = useAuthenticationContext();
 
-	return !isVerifyingUser ? (
+	return !isAuthLoading ? (
 		<NavigationContainer>
 			{CONSTANTS.IS_ANDROID && (
 				<StatusBar

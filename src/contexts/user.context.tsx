@@ -1,3 +1,4 @@
+// REACT //
 import React, {
 	Dispatch,
 	createContext,
@@ -8,12 +9,13 @@ import React, {
 } from "react";
 
 // TYPES //
-import { UserData } from "../types/user";
+import { UserData } from "../types/users";
+
+// ENUMS //
+import { LocalStorageKeys } from "../enums/local-storage";
 
 // SERVICES //
-import { storeDataInAsyncStorage } from "../services/cache";
-
-// UTILS //
+import { setDataInLocalStorage } from "../services/local-storage.service";
 
 // Define all the state you want to share globally here
 type UserState = {
@@ -45,7 +47,7 @@ type UserProviderProps = {
 /** User Context */
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 	// Define States
-	const [user, setUser] = useState<Partial<UserData> | null>(null);
+	const [user, setUser] = useState<UserData | null>(null);
 	// Initialize your other state here
 
 	// Define Setters
@@ -57,9 +59,10 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 			setUser,
 		};
 	}, [user]);
+
 	useEffect(() => {
 		if (user !== undefined && user !== null)
-			storeDataInAsyncStorage("user", user);
+			setDataInLocalStorage(LocalStorageKeys.USER, user);
 	}, [user]);
 
 	return <UserContext.Provider value={value}>{children}</UserContext.Provider>;

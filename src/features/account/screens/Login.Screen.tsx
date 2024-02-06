@@ -1,118 +1,116 @@
+// REACT //
 import React, { useEffect, useState } from "react";
+
+// REACT NATIVE //
 import { Text, View } from "react-native";
 
-// STYLES //
+// TYPES //
+import { LoginFormErrors, LoginInputData } from "../../../types/account";
 
 // COMPONENTS //
 import TextInputBox from "../../../components/common-components/TextInputBox";
 import Button from "../../../components/common-components/Button";
 
-// API SERVICES //
-import { loginRequest } from "../../../services/api/users";
-
-// SERVICES //
-import { logPageViewEvent } from "../../../services/analytics";
-
-// TYPES //
-import { UserData } from "../../../types/user";
-
 // CONTEXTS //
 import { useAuthenticationContext } from "../../../contexts/authentication.context";
 
-// UTILS //
-
-// PLUGINS //
-
-// SVG'S //
+// SERVICES //
+import { logPageViewEvent } from "../../../services/analytics.service";
+import { validateEmail } from "../../../utils/validation.util";
 
 // interface LoginScreenProps {}
 
 /** Login Screen */
 const LoginScreen: React.FC<unknown> = () => {
 	// Define Contexts
-	const { loginUser } = useAuthenticationContext();
+	const { login, isAuthLoading } = useAuthenticationContext();
 
 	// Define States
-	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [formInputs, setFormInputs] = useState({
-		userInput: "",
-		passwordInput: "",
+	const [formInputs, setFormInputs] = useState<LoginInputData>({
+		email_input: "",
+		password_input: "",
 	});
 
 	// Define Error States
-	const [formErrors, setFormErrors] = useState({
-		userInput: "",
-		passwordInput: "",
-		errorMessage: "",
+	const [formErrors, setFormErrors] = useState<LoginFormErrors>({
+		email_error: "",
+		password_error: "",
+		form_error: "",
 	});
 
 	// Helper Function: Handle login attempt
-
-	/** Reset all errors */
-	const resetErrors = () => {
-		setFormErrors({
-			userInput: "",
-			passwordInput: "",
-			errorMessage: "",
+	/** Update the input of Form */
+	const changeFormInput = (
+		key: keyof LoginInputData,
+		value: string | number
+	): void => {
+		setFormInputs((prevInputs: LoginInputData) => {
+			return {
+				...prevInputs,
+				[key]: value,
+			};
 		});
 	};
-	/** Validate Inputs */
-	const validateInputs = () => {
-		let valid = true;
+
+	/** Reset all errors */
+	const resetErrors = (): void => {
+		setFormErrors({
+			email_error: "",
+			password_error: "",
+			form_error: "",
+		});
+	};
+
+	/** Validate all the Inputs in the Form */
+	const validateInputs = (): boolean => {
+		let isValid = true;
 		// Check if Username Input is filled
-		if (formInputs.userInput === "") {
+		if (formInputs.email_input === "" || !validateEmail(formInputs.email_input)) {
+			// <-- Added a closing parenthesis here
 			setFormErrors((prevErrors) => ({
 				...prevErrors,
-				userInput: "You need to enter a valid User Name or Email",
+				email_error: "You need to enter a valid Email",
 			}));
-			valid = false;
+			isValid = false;
 		}
 
 		// Check if password input is filled
-		if (formInputs.passwordInput === "") {
+		if (formInputs.password_input === "") {
 			setFormErrors((prevErrors) => ({
 				...prevErrors,
-				passwordInput: "You need to enter a valid Password",
+				password_error: "You need to enter a valid Password",
 			}));
-			valid = false;
+			isValid = false;
 		}
 
-		return valid;
+		// Return the validation State
+		return isValid;
 	};
 
-	/** Handle Login Functionality */
-	const handleLogin = async () => {
-		setIsLoading(true);
+	/** Handle the Login Functionality - via the Authentication Context */
+	const handleLogin = async (): Promise<void> => {
 		// Reset the old errors
 		resetErrors();
 		// Check input validity
 		if (validateInputs()) {
 			try {
-				// Make API Call to Login API Endpoint
-				const loginResponse = await loginRequest(
-					formInputs.userInput,
-					formInputs.passwordInput
-				);
-
-				if (loginResponse.status) {
-					const userData: UserData = loginResponse.data;
-					// Login the user into the App
-					loginUser(userData);
-				} else {
+				// Call the Login Function in the Authentication Context
+				const loginResponse = await login(formInputs);
+				// Check the Login Response (to show Errors)
+				if (!loginResponse.status) {
 					setFormErrors((prevErrors) => ({
 						...prevErrors,
-						errorMessage: loginResponse.message,
+						form_error: loginResponse.message,
 					}));
 				}
 			} catch (error) {
 				console.log("Login Error", error);
 				setFormErrors((prevErrors) => ({
 					...prevErrors,
-					errorMessage: "Looks like we faced some network issues. Please try again.",
+					form_error: "Looks like we faced some network issues. Please try again.",
 				}));
 			}
 		}
-		setIsLoading(false);
 	};
 
 	// Use Effect and Focus Effect
@@ -126,40 +124,32 @@ const LoginScreen: React.FC<unknown> = () => {
 		<>
 			<Text>Login Screen</Text>
 			<View>
-				{/* Username or Email Input */}
+				{/* Email Input */}
 				<TextInputBox
-					label="Username or Email"
-					value={formInputs.userInput}
-					placeholder="Enter the UserName or Email"
+					label="Email"
+					value={formInputs.email_input}
+					placeholder="Enter the Email"
 					type="text"
-					onChangeText={(value) =>
-						setFormInputs((prevInputs) => ({ ...prevInputs, userInput: value }))
-					}
-					errorMessage={formErrors.userInput}
-					isError={formErrors.userInput !== ""}
-					onClear={() =>
-						setFormInputs((prevInputs) => ({ ...prevInputs, userInput: "" }))
-					}
+					onChangeText={(value: string) => changeFormInput("email_input", value)}
+					errorMessage={formErrors.email_error}
+					isError={formErrors.email_error !== ""}
+					onClear={() => changeFormInput("email_input", "")}
 				/>
 
 				{/* Password Input */}
 				<TextInputBox
 					label="Password"
 					placeholder="********"
-					value={formInputs.passwordInput}
-					onChangeText={(value) =>
-						setFormInputs((prevInputs) => ({ ...prevInputs, passwordInput: value }))
-					}
+					value={formInputs.password_input}
+					onChangeText={(value) => changeFormInput("password_input", value)}
 					type="password"
-					errorMessage={formErrors.passwordInput}
-					isError={formErrors.passwordInput !== ""}
-					onClear={() =>
-						setFormInputs((prevInputs) => ({ ...prevInputs, passwordInput: "" }))
-					}
+					errorMessage={formErrors.password_error}
+					isError={formErrors.password_error !== ""}
+					onClear={() => changeFormInput("password_input", "")}
 				/>
 
 				{/* Error Message */}
-				{formErrors.errorMessage !== "" && <Text>{formErrors.errorMessage}</Text>}
+				{formErrors.form_error !== "" && <Text>{formErrors.form_error}</Text>}
 			</View>
 
 			{/* Login Button */}
@@ -168,7 +158,7 @@ const LoginScreen: React.FC<unknown> = () => {
 				text="Login"
 				mode="block"
 				onClick={handleLogin}
-				showButtonLoader={isLoading}
+				showButtonLoader={isAuthLoading}
 			/>
 		</>
 	);

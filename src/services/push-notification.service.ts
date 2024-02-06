@@ -1,8 +1,11 @@
+// PLUGINS //
 import * as Notifications from "expo-notifications";
+
+// CONSTANTS //
 import { PROJECT_ID } from "../infrastructure/constants";
 
 /** Register for push notifications */
-export const registerForPushNotificationsAsync = async () => {
+export const registerForPushNotificationsAsync = async (): Promise<void> => {
 	// Check if the device has push notification permissions.
 	const { status: existingStatus } = await Notifications.getPermissionsAsync();
 	let finalStatus = existingStatus;
@@ -21,11 +24,11 @@ export const registerForPushNotificationsAsync = async () => {
 };
 
 /** Get push token */
-export const getPushToken = async () => {
-	const token = (await Notifications.getExpoPushTokenAsync(
-		{
+export const getPushToken = async (): Promise<string> => {
+	const token = (
+		await Notifications.getExpoPushTokenAsync({
 			projectId: PROJECT_ID,
-		}
-	)).data;
+		})
+	).data;
 	return token;
 };

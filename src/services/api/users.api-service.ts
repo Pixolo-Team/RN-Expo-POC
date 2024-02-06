@@ -1,30 +1,38 @@
+// MODULES //
 import axios, { AxiosRequestConfig } from "axios";
-
-// SERVICES //
-import { getPushToken } from "../pushNotification";
-
-// INFRASTRUCTURE //
-import { API_URL, CONSTANTS } from "../../infrastructure/constants";
-
-// TYPES //
-import { Device, LoginApiData, UserData } from "../../types/user";
-import { ApiResponseData } from "../../types/app";
 
 // PLUGINS //
 import { androidId, getIosIdForVendorAsync } from "expo-application";
 import * as device from "expo-device";
 
-/** Create user account */
+// TYPES //
+import { Device, UserData } from "../../types/users";
+import { ApiResponseData } from "../../types/app";
+import { LoginApiData } from "../../types/account";
+
+// ENUMS //
+import { LocalStorageKeys } from "../../enums/local-storage";
+
+// SERVICES //
+import { getPushToken } from "../push-notification.service";
+import { getDataFromLocalStorage } from "../local-storage.service";
+
+// UTILS //
+import { API_URL, CONSTANTS } from "../../infrastructure/constants";
+
+// INFRASTRUCTURE //
+
+/** Create User (Sign Up) */
 export const createUserRequest = async (
-	data: Partial<UserData>
+	user: Partial<UserData>
 ): Promise<ApiResponseData<UserData>> => {
 	try {
 		// Set up the API Call Config
 		const config: AxiosRequestConfig = {
 			method: "post",
-			url: `${API_URL}users/createUser`,
+			url: `${API_URL}dummy/create-user.php`,
 			headers: {},
-			data: data,
+			data: user,
 		};
 
 		// Make call to the API
@@ -35,9 +43,9 @@ export const createUserRequest = async (
 	}
 };
 
-/** Login user */
+/** Login User */
 export const loginRequest = async (
-	userInput: string,
+	email: string,
 	password: string
 ): Promise<ApiResponseData<LoginApiData>> => {
 	try {
@@ -47,7 +55,7 @@ export const loginRequest = async (
 			url: `${API_URL}dummy/login.php`,
 			headers: {},
 			data: {
-				user_input: userInput,
+				email: email,
 				password: password,
 				device: {
 					expo_id: await getPushToken(),
@@ -68,16 +76,21 @@ export const loginRequest = async (
 	}
 };
 
-/** Get User request */
+/** Get the Latest User Object */
 export const getUserDataRequest = async (
 	userId: string
 ): Promise<ApiResponseData<UserData>> => {
 	try {
+		// Get the Token from the Local Storage
+		const token: string = await getDataFromLocalStorage(LocalStorageKeys.TOKEN);
+
 		// Set up the API Call Config
 		const config: AxiosRequestConfig = {
 			method: "get",
-			url: `${API_URL}users/${userId}`,
-			headers: {},
+			url: `${API_URL}dummy/user.php?userId=${userId}`,
+			headers: {
+				Authorization: token,
+			},
 			data: {},
 		};
 
@@ -89,42 +102,49 @@ export const getUserDataRequest = async (
 	}
 };
 
-/** Verify Token Request */
+/** Verify if the Token is active */
 export const verifyTokenRequest = async (
 	token: string
-): Promise<ApiResponseData<boolean>> => {
+): Promise<ApiResponseData<UserData>> => {
 	try {
 		// Set up the API Call Config
 		const config: AxiosRequestConfig = {
 			method: "get",
 			url: `${API_URL}dummy/verify-token.php`,
 			headers: {
-				"Content-Type": "application/json",
 				Authorization: token,
 			},
 			data: {},
 		};
 
 		// Make call to the API
-		const response = await axios.request<ApiResponseData<boolean>>(config);
+		const response = await axios.request<ApiResponseData<UserData>>(config);
 		return response.data;
 	} catch (error: any) {
 		return error.response;
 	}
 };
 
-/** Sign out  */
+/** Logs the User out of the App  */
 export const logoutRequest = async (
-	deviceId: string | null
+	userId: string | null
 ): Promise<ApiResponseData<boolean>> => {
 	try {
+		// Get the Token from the Local Storage
+		const token: string = await getDataFromLocalStorage(LocalStorageKeys.TOKEN);
+
 		// Set up the API Call Config
 		const config: AxiosRequestConfig = {
 			method: "post",
-			url: `${API_URL}users/logoutUser`,
-			headers: {},
+			url: `${API_URL}dummy/logout.php`,
+			headers: {
+				Authorization: token,
+			},
 			data: {
-				device_id: deviceId,
+				user_id: userId,
+				device_id: CONSTANTS.IS_ANDROID
+					? androidId
+					: await getIosIdForVendorAsync(),
 			},
 		};
 
@@ -136,19 +156,22 @@ export const logoutRequest = async (
 	}
 };
 
-/** Change Password Request */
+/** Change the Password of the User */
 export const changePasswordRequest = async (
-	current_password: string,
 	new_password: string
 ): Promise<ApiResponseData<boolean>> => {
 	try {
+		// Get the Token from the Local Storage
+		const token: string = await getDataFromLocalStorage(LocalStorageKeys.TOKEN);
+
 		// Set up the API Call Config
 		const config: AxiosRequestConfig = {
 			method: "post",
-			url: `${API_URL}users/changePassword`,
-			headers: {},
+			url: `${API_URL}dummy/change-password.php`,
+			headers: {
+				Authorization: token,
+			},
 			data: {
-				current_password: current_password,
 				new_password: new_password,
 			},
 		};
@@ -161,15 +184,15 @@ export const changePasswordRequest = async (
 	}
 };
 
-/** Delete User Account Request */
-export const deleteUserAccountRequest = async (): Promise<
+/** API to send Forgot Password Request to the Backend */
+export const forgetPasswordRequest = async (): Promise<
 	ApiResponseData<boolean>
 > => {
 	try {
 		// Set up the API Call Config
 		const config: AxiosRequestConfig = {
-			method: "delete",
-			url: `${API_URL}users`,
+			method: "post",
+			url: `${API_URL}dummy/forgot-password.php`,
 			headers: {},
 			data: {},
 		};
