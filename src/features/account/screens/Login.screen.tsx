@@ -46,7 +46,9 @@ const LoginScreen: React.FC<unknown> = () => {
 		key: keyof LoginInputData,
 		value: string | number
 	): void => {
+		// Update the form inputs state with the new value for the specified key
 		setFormInputs((prevInputs: LoginInputData) => {
+			// Return a new object with the previous inputs merged with the new value
 			return {
 				...prevInputs,
 				[key]: value,
