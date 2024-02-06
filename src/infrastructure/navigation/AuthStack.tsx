@@ -1,8 +1,11 @@
+// REACT //
 import React from "react";
+
+// NAVIGATION //
 import { createStackNavigator } from "@react-navigation/stack";
 
 // SCREENS //
-import LoginScreen from "../../features/account/screens/Login.Screen";
+import LoginScreen from "../../features/account/screens/Login.screen";
 
 const AuthStackScreens = createStackNavigator();
 

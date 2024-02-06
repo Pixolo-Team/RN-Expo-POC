@@ -1,35 +1,37 @@
+// REACT //
 import React from "react";
+
+// REACT NATIVE //
 import { StatusBar } from "react-native";
+
+// CONTEXTS //
+import { useAuthenticationContext } from "../../contexts/authentication.context";
+
+// UTILS //
+import { CONSTANTS } from "../constants";
 
 // NAVIGATION //
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
-// CONTEXTS //
-import { useAuthenticationContext } from "../../contexts/authentication.context";
-
-// STACKS //
+// OTHERS //
 import AuthStack from "./AuthStack";
-
-// SCREENS //
-
-// UTILS //
-import { CONSTANTS } from "../constants";
-
-// SCREENS //
 import HomeScreen from "../../features/home/screens/Home.screen";
 
-// CONTEXTS //
+// STACKS //
+
+// SCREENS //
 
 const RootStack = createStackNavigator();
 
 /** App Navigation */
 const AppNavigation = () => {
 	// Define Contexts
-	const { isAuthenticated, isAuthLoading } = useAuthenticationContext();
+	const { isAuthenticated } = useAuthenticationContext();
 
-	return !isAuthLoading ? (
+	return (
 		<NavigationContainer>
+			{/* If Android then put a Custom Status Bar */}
 			{CONSTANTS.IS_ANDROID && (
 				<StatusBar
 					barStyle="light-content"
@@ -55,8 +57,6 @@ const AppNavigation = () => {
 				</RootStack.Navigator>
 			)}
 		</NavigationContainer>
-	) : (
-		<></>
 	);
 };
 

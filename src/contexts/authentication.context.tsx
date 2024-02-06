@@ -9,6 +9,9 @@ import { LoginInputData } from "../types/account";
 // ENUMS //
 import { LocalStorageKeys } from "../enums/local-storage";
 
+// COMPONENTS //
+import Loader from "../components/common-components/Loader";
+
 // API SERVICES //
 import {
 	loginRequest,
@@ -23,7 +26,7 @@ import {
 	setDataInLocalStorage,
 } from "../services/local-storage.service";
 
-// CONTEXTS //
+// OTHERS //
 import { useUserContext } from "./user.context";
 
 // Define all the state you want to share globally here
@@ -75,12 +78,16 @@ export const AuthenticationProvider: React.FC<AuthenticationProviderProps> = ({
 		setIsAuthenticated(false);
 		setUser(null);
 		flushLocalStorage();
+		setIsAuthLoading(false);
 	};
 
 	/** Logout the User */
 	const logout = async (): Promise<void> => {
+		// Start changing Auth State
+		setIsAuthLoading(true);
+		const userId = (await getDataFromLocalStorage(LocalStorageKeys.USER))._id;
 		// Make the Logout API Request
-		logoutRequest(user?._id ?? "")
+		logoutRequest(userId ?? "")
 			.then((response: ApiResponseData<boolean>) => {
 				if (response.status) {
 					// Logout the User from the App (Locally on Phone)
@@ -139,6 +146,7 @@ export const AuthenticationProvider: React.FC<AuthenticationProviderProps> = ({
 		await setDataInLocalStorage(LocalStorageKeys.TOKEN, token);
 		setUser(user);
 		setIsAuthenticated(true);
+		setIsAuthLoading(false);
 	};
 
 	/** Check if the user is logged in */
@@ -164,6 +172,8 @@ export const AuthenticationProvider: React.FC<AuthenticationProviderProps> = ({
 					.catch((error: any) => {
 						console.log(error);
 					});
+			} else {
+				setIsAuthLoading(false);
 			}
 		} catch (error) {
 			// Handle any errors that occur during the asynchronous operations
@@ -191,6 +201,8 @@ export const AuthenticationProvider: React.FC<AuthenticationProviderProps> = ({
 
 	return (
 		<AuthenticationContext.Provider value={value}>
+			{/* Show loader when the app is verifying the user */}
+			<Loader visible={isAuthLoading} />
 			{children}
 		</AuthenticationContext.Provider>
 	);
