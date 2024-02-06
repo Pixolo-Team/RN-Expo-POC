@@ -133,7 +133,7 @@ export const AuthenticationProvider: React.FC<AuthenticationProviderProps> = ({
 	};
 
 	/** Login the Usr Locally (within the App) */
-	const loginLocally = async (user: UserData, token: string) => {
+	const loginLocally = async (user: UserData, token: string): Promise<void> => {
 		// Save the User and Token to Local Storage
 		await setDataInLocalStorage(LocalStorageKeys.USER, user);
 		await setDataInLocalStorage(LocalStorageKeys.TOKEN, token);
@@ -142,7 +142,7 @@ export const AuthenticationProvider: React.FC<AuthenticationProviderProps> = ({
 	};
 
 	/** Check if the user is logged in */
-	const checkLoggedIn = async () => {
+	const checkLoggedIn = async (): Promise<void> => {
 		try {
 			// Start the Verification Pro
 			setIsAuthLoading(true);
