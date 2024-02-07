@@ -7,8 +7,6 @@ import AppNavigation from "./src/infrastructure/navigation/AppNavigation";
 import { UserProvider } from "./src/contexts/user.context";
 import { AuthenticationProvider } from "./src/contexts/authentication.context";
 
-// PROVIDERS //
-
 // STYLES //
 
 // COMPONENTS //

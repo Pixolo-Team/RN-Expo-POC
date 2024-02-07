@@ -14,13 +14,11 @@ import { CONSTANTS } from "../constants";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
-// OTHERS //
-import AuthStack from "./AuthStack";
-import HomeScreen from "../../features/home/screens/Home.screen";
-
 // STACKS //
+import AuthStack from "./AuthStack";
 
 // SCREENS //
+import HomeScreen from "../../features/home/screens/Home.screen";
 
 const RootStack = createStackNavigator();
 
@@ -39,6 +37,8 @@ const AppNavigation = () => {
 					translucent
 				/>
 			)}
+
+			{/* If user is authenticated then show AuthStack else show HomeScreen */}
 			{!isAuthenticated ? (
 				<RootStack.Navigator>
 					<RootStack.Screen

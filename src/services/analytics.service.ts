@@ -12,6 +12,7 @@ import Constants from "expo-constants";
 
 /** Will log the analytics screen view event */
 export const logPageViewEvent = async (pageName: string) => {
+	// Get the userId from Local storage
 	const userId = (await getDataFromLocalStorage(LocalStorageKeys.USER))._id;
 	// Constants.appOwnership !== "expo" && analytics().logEvent("screen_view", {
 	// 	user: userId,

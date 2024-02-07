@@ -85,7 +85,10 @@ export const AuthenticationProvider: React.FC<AuthenticationProviderProps> = ({
 	const logout = async (): Promise<void> => {
 		// Start changing Auth State
 		setIsAuthLoading(true);
+
+		// Get the userId from Local storage
 		const userId = (await getDataFromLocalStorage(LocalStorageKeys.USER))._id;
+
 		// Make the Logout API Request
 		logoutRequest(userId ?? "")
 			.then((response: ApiResponseData<boolean>) => {
@@ -139,13 +142,17 @@ export const AuthenticationProvider: React.FC<AuthenticationProviderProps> = ({
 		}
 	};
 
-	/** Login the Usr Locally (within the App) */
+	/** Login the User Locally (within the App) */
 	const loginLocally = async (user: UserData, token: string): Promise<void> => {
 		// Save the User and Token to Local Storage
 		await setDataInLocalStorage(LocalStorageKeys.USER, user);
 		await setDataInLocalStorage(LocalStorageKeys.TOKEN, token);
+
+		// Save user data in the user context
 		setUser(user);
+		// Set the Authenticated State to true
 		setIsAuthenticated(true);
+		// Stop the Verification Loader
 		setIsAuthLoading(false);
 	};
 
@@ -154,6 +161,8 @@ export const AuthenticationProvider: React.FC<AuthenticationProviderProps> = ({
 		try {
 			// Start the Verification Pro
 			setIsAuthLoading(true);
+
+			// Get user and token from Local storage
 			const userObject = await getDataFromLocalStorage(LocalStorageKeys.USER);
 			const token = await getDataFromLocalStorage(LocalStorageKeys.TOKEN);
 
