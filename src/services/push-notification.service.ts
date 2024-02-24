@@ -2,7 +2,7 @@
 import * as Notifications from "expo-notifications";
 
 // CONSTANTS //
-import { PROJECT_ID } from "../infrastructure/constants";
+import { EXPO_PROJECT_ID } from "../infrastructure/constants";
 
 /** Register for push notifications */
 export const registerForPushNotificationsAsync = async (): Promise<void> => {
@@ -27,7 +27,7 @@ export const registerForPushNotificationsAsync = async (): Promise<void> => {
 export const getPushToken = async (): Promise<string> => {
 	const token = (
 		await Notifications.getExpoPushTokenAsync({
-			projectId: PROJECT_ID,
+			projectId: EXPO_PROJECT_ID,
 		})
 	).data;
 	return token;

@@ -12,7 +12,7 @@ import React, {
 import { UserData } from "../types/users";
 
 // ENUMS //
-import { LocalStorageKeys } from "../enums/local-storage";
+import { LocalStorageKeys } from "../enums/local-storage.enum";
 
 // SERVICES //
 import { setDataInLocalStorage } from "../services/local-storage.service";

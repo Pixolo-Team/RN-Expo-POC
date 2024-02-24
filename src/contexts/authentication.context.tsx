@@ -7,7 +7,7 @@ import { ApiResponseData } from "../types/app";
 import { LoginInputData } from "../types/account";
 
 // ENUMS //
-import { LocalStorageKeys } from "../enums/local-storage";
+import { LocalStorageKeys } from "../enums/local-storage.enum";
 
 // COMPONENTS //
 import Loader from "../components/common-components/Loader";

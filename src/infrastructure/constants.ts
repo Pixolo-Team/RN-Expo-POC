@@ -14,5 +14,5 @@ export const CONSTANTS = {
 // API URL
 export const API_URL = "https://api.pixoloproductions.com/";
 
-// Project ID
-export const PROJECT_ID = "f1f198ea-f5cd-49f4-9edf-eaa985d015d5";
+// Project ID from EXPO Platform
+export const EXPO_PROJECT_ID = "f1f198ea-f5cd-49f4-9edf-eaa985d015d5";

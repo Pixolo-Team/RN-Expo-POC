@@ -2,7 +2,7 @@
 import analytics from "@react-native-firebase/analytics";
 
 // ENUMS //
-import { LocalStorageKeys } from "../enums/local-storage";
+import { LocalStorageKeys } from "../enums/local-storage.enum";
 
 // SERVICES //
 import { getDataFromLocalStorage } from "./local-storage.service";
@@ -10,9 +10,9 @@ import { getDataFromLocalStorage } from "./local-storage.service";
 // UTILS //
 import Constants from "expo-constants";
 
-/** Will log the analytics screen view event */
+/** Will log the Analytics Screen View event */
 export const logPageViewEvent = async (pageName: string) => {
-	// Get the userId from Local storage
+	// Get the User ID from Local storage
 	const userId = (await getDataFromLocalStorage(LocalStorageKeys.USER))._id;
 	// Constants.appOwnership !== "expo" && analytics().logEvent("screen_view", {
 	// 	user: userId,
@@ -21,7 +21,7 @@ export const logPageViewEvent = async (pageName: string) => {
 	// });
 };
 
-/**  Will log the analytics events */
+/**  Will log the Analytics events */
 export const logEvents = async (
 	eventName: string,
 	params: Record<string, any>

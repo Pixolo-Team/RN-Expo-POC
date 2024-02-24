@@ -11,7 +11,7 @@ import { ApiResponseData } from "../../types/app";
 import { LoginApiData } from "../../types/account";
 
 // ENUMS //
-import { LocalStorageKeys } from "../../enums/local-storage";
+import { LocalStorageKeys } from "../../enums/local-storage.enum";
 
 // SERVICES //
 import { getPushToken } from "../push-notification.service";
