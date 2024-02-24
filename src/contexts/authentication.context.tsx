@@ -86,7 +86,7 @@ export const AuthenticationProvider: React.FC<AuthenticationProviderProps> = ({
 		// Start changing Auth State
 		setIsAuthLoading(true);
 
-		// Get the userId from Local storage
+		// Get the User ID from Local storage
 		const userId = (await getDataFromLocalStorage(LocalStorageKeys.USER))._id;
 
 		// Make the Logout API Request
