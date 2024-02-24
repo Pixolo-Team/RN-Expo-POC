@@ -148,7 +148,7 @@ export const AuthenticationProvider: React.FC<AuthenticationProviderProps> = ({
 		await setDataInLocalStorage(LocalStorageKeys.USER, user);
 		await setDataInLocalStorage(LocalStorageKeys.TOKEN, token);
 
-		// Save user data in the user context
+		// Save User data in the User context
 		setUser(user);
 		// Set the Authenticated State to true
 		setIsAuthenticated(true);
@@ -156,7 +156,7 @@ export const AuthenticationProvider: React.FC<AuthenticationProviderProps> = ({
 		setIsAuthLoading(false);
 	};
 
-	/** Check if the user is logged in */
+	/** Check if the User is logged in */
 	const checkLoggedIn = async (): Promise<void> => {
 		try {
 			// Start the Verification Pro
@@ -210,7 +210,7 @@ export const AuthenticationProvider: React.FC<AuthenticationProviderProps> = ({
 
 	return (
 		<AuthenticationContext.Provider value={value}>
-			{/* Show loader when the app is verifying the user */}
+			{/* Show loader when the app is verifying the User */}
 			<Loader visible={isAuthLoading} />
 			{children}
 		</AuthenticationContext.Provider>
