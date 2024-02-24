@@ -1,22 +1,25 @@
+// REACT //
 import React from "react";
+
+// NAVIGATION //
 import { createStackNavigator } from "@react-navigation/stack";
 
 // SCREENS //
-import HomeScreen from "../../features/home/screens/Home.screen";
+import LoginScreen from "../../features/account/screens/Login.screen";
 
-const AuthStack = createStackNavigator();
+const AuthStackScreens = createStackNavigator();
 
 /** Create the Navigation for the Auth Stack */
-const AuthStackScreen: React.FC = () => {
+const AuthStack = () => {
 	return (
-		<AuthStack.Navigator initialRouteName={"Home"}>
-			<AuthStack.Screen
-				name="Home"
-				component={HomeScreen}
+		<AuthStackScreens.Navigator initialRouteName="Login">
+			<AuthStackScreens.Screen
+				name="Login"
+				component={LoginScreen}
 				options={{ headerShown: false }}
 			/>
-		</AuthStack.Navigator>
+		</AuthStackScreens.Navigator>
 	);
 };
 
-export default AuthStackScreen;
+export default AuthStack;

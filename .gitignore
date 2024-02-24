@@ -131,3 +131,7 @@ dist
 .pnp.*
 
 .expo
+
+# Mac Files
+.DS_Store
+

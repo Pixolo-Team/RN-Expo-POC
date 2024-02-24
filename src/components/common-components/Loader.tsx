@@ -61,6 +61,7 @@ const styles = StyleSheet.create({
 		left: 0,
 		right: 0,
 		bottom: 0,
+		elevation: 1,
 	},
 	loaderText: {
 		marginTop: theme.spacing[1],

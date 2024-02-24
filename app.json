@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "RN-Expo-POC",
-    "slug": "RN-Expo-POC",
+    "slug": "rn-expo-poc",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -20,6 +20,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "f1f198ea-f5cd-49f4-9edf-eaa985d015d5"
+      }
+    },
+    "owner": "pixolodeveloper"
   }
 }

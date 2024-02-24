@@ -1,4 +1,7 @@
+// REACT //
 import React, { useState } from "react";
+
+// REACT NATIVE //
 import {
 	Text,
 	StyleSheet,
@@ -12,20 +15,16 @@ import {
 	TouchableWithoutFeedback,
 } from "react-native";
 
-// STYLES //
-import { theme } from "../../infrastructure/theme/theme";
-
-// COMPONENTS //
-
-// SERVICES //
-
-// UTILS //
-import { formatDate } from "../../utils/parse";
-
 // PLUGINS //
 import DateTimePicker from "@react-native-community/datetimepicker";
 
-// SVG'S //
+// STYLES //
+import { theme } from "../../infrastructure/theme/theme";
+
+// UTILS //
+import { formatDate } from "../../utils/parse.util";
+
+// SVG's //
 import DateCalender from "../../../assets/icons/date.svg";
 
 interface DateInputProps {
