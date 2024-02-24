@@ -3,5 +3,8 @@ export enum AnalyticsEvents {
 	USER_SIGN_UP = "user_sign_up",
 	USER_LOGIN = "user_login",
 	USER_LOGOUT = "user_logout",
+}
+
+export enum AnalyticsPages {
 	LOGIN = "Login",
 }

@@ -8,7 +8,7 @@ import { Text, View } from "react-native";
 import { LoginFormErrorsData, LoginInputData } from "../../../types/account";
 
 // ENUMS //
-import { AnalyticsEvents } from "../../../enums/analytics.enum";
+import { AnalyticsPages } from "../../../enums/analytics.enum";
 
 // COMPONENTS //
 import TextInputBox from "../../../components/common-components/TextInputBox";
@@ -122,7 +122,7 @@ const LoginScreen: React.FC<unknown> = () => {
 	// Use Effect and Focus Effect
 	useEffect(() => {
 		// Log Event in analytics when Login Screen is opened
-		logPageViewEvent(AnalyticsEvents.LOGIN);
+		logPageViewEvent(AnalyticsPages.LOGIN);
 	}, []);
 
 	// View starts here
