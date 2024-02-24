@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 
 // TYPES //
-import { LoginFormErrors, LoginInputData } from "../../../types/account";
+import { LoginFormErrorsData, LoginInputData } from "../../../types/account";
 
 // COMPONENTS //
 import TextInputBox from "../../../components/common-components/TextInputBox";
@@ -34,7 +34,7 @@ const LoginScreen: React.FC<unknown> = () => {
 	});
 
 	// Define Error States
-	const [formErrors, setFormErrors] = useState<LoginFormErrors>({
+	const [formErrors, setFormErrors] = useState<LoginFormErrorsData>({
 		email_error: "",
 		password_error: "",
 		form_error: "",
@@ -118,7 +118,7 @@ const LoginScreen: React.FC<unknown> = () => {
 
 	// Use Effect and Focus Effect
 	useEffect(() => {
-		// Log Event in firebase analytics when Login Screen is opened
+		// Log Event in analytics when Login Screen is opened
 		logPageViewEvent("Login");
 	}, []);
 

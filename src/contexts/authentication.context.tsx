@@ -26,7 +26,7 @@ import {
 	setDataInLocalStorage,
 } from "../services/local-storage.service";
 
-// OTHERS //
+// CONTEXTS //
 import { useUserContext } from "./user.context";
 
 // Define all the state you want to share globally here
@@ -106,7 +106,7 @@ export const AuthenticationProvider: React.FC<AuthenticationProviderProps> = ({
 	const login = async (
 		userInput: LoginInputData
 	): Promise<{ status: boolean; message: string }> => {
-		// Set the verifying user state to true
+		// Set the verifying User state to true
 		setIsAuthLoading(true);
 
 		// Make API Call to login the User
@@ -162,7 +162,7 @@ export const AuthenticationProvider: React.FC<AuthenticationProviderProps> = ({
 			// Start the Verification Pro
 			setIsAuthLoading(true);
 
-			// Get user and token from Local storage
+			// Get User and token from Local storage
 			const userObject = await getDataFromLocalStorage(LocalStorageKeys.USER);
 			const token = await getDataFromLocalStorage(LocalStorageKeys.TOKEN);
 

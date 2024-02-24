@@ -9,13 +9,9 @@ export const CONSTANTS = {
 	IS_ANDROID: Platform.OS === "android",
 	IS_IOS: Platform.OS === "ios",
 	VERSION: Platform.Version,
-	RESEND_REFRESH_TIME: 60,
-	MESSAGES_LIMIT: 50,
-	BIG_DATA_FETCH_THRESHOLD: 5,
-	SMALL_FETCH_THRESHOLD: 2,
 };
 
-// API URL 
+// API URL
 export const API_URL = "https://api.pixoloproductions.com/";
 
 // Project ID

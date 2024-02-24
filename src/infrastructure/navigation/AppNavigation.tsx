@@ -29,7 +29,7 @@ const AppNavigation = () => {
 
 	return (
 		<NavigationContainer>
-			{/* If Android then put a Custom Status Bar */}
+			{/* If Android then show the Custom Status Bar */}
 			{CONSTANTS.IS_ANDROID && (
 				<StatusBar
 					barStyle="light-content"
@@ -38,7 +38,7 @@ const AppNavigation = () => {
 				/>
 			)}
 
-			{/* If user is authenticated then show AuthStack else show HomeScreen */}
+			{/* If User is Authenticated then show the Auth Stack else show the Home Screen */}
 			{!isAuthenticated ? (
 				<RootStack.Navigator>
 					<RootStack.Screen

@@ -6,7 +6,7 @@ import { androidId, getIosIdForVendorAsync } from "expo-application";
 import * as device from "expo-device";
 
 // TYPES //
-import { Device, UserData } from "../../types/users";
+import { DeviceData, UserData } from "../../types/users";
 import { ApiResponseData } from "../../types/app";
 import { LoginApiData } from "../../types/account";
 
@@ -64,7 +64,7 @@ export const loginRequest = async (
 						: await getIosIdForVendorAsync(),
 					platform: CONSTANTS.OS,
 					device_name: device.brand ?? "Unknown Device",
-				} as Device,
+				} as DeviceData,
 			},
 		};
 
@@ -127,7 +127,7 @@ export const verifyTokenRequest = async (
 
 /** Logs the User out of the App  */
 export const logoutRequest = async (
-	userId: string | null
+	userId: string
 ): Promise<ApiResponseData<boolean>> => {
 	try {
 		// Get the Token from the Local Storage

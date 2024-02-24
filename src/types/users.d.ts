@@ -1,4 +1,4 @@
-interface Device {
+type DeviceData = {
 	id?: string;
 	device_id: string | null; // Unique ID of the device
 	device_name?: string; // Samsung, Oppo
@@ -6,7 +6,7 @@ interface Device {
 	login_time?: number; // epoch time
 	platform?: string;
 	status?: 0 | 1; // 0?: Logged Out, 1?: Logged In
-}
+};
 
 type UserData = {
 	_id?: string;
@@ -21,12 +21,12 @@ type UserData = {
 	username?: string;
 };
 
-interface UserCoreData {
+type UserCoreData = {
 	user_id: string;
 	first_name: string;
 	last_name: string;
 	profile_photo: string;
 	username: string;
-}
+};
 
-export { Device, UserCoreData, UserData };
+export { DeviceData, UserData, UserCoreData };

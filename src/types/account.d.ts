@@ -7,10 +7,10 @@ type LoginInputData = {
 	password_input: string;
 };
 
-type LoginFormErrors = {
+type LoginFormErrorsData = {
 	email_error: string;
 	password_error: string;
 	form_error: string;
 };
 
-export { LoginApiData, LoginInputData, LoginFormErrors };
+export { LoginApiData, LoginInputData, LoginFormErrorsData };
