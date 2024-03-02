@@ -19,3 +19,10 @@ export const validateName = (name: string): boolean => {
 	const nameRegex = /^[a-zA-Z\s]*$/;
 	return nameRegex.test(name);
 };
+
+/** Password Validation function */
+export const validatePassword = (password: string): boolean => {
+	const passwordRegex =
+		/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+	return passwordRegex.test(password);
+};
