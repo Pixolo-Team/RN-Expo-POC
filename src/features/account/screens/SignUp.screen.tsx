@@ -31,6 +31,7 @@ import {
 // UTILS //
 import {
 	validateEmail,
+	validateName,
 	validatePhoneNumber,
 } from "../../../utils/validation.util";
 import { CONSTANTS } from "../../../infrastructure/constants";
@@ -77,7 +78,7 @@ const SignUpScreen: React.FC = () => {
 		if (formInputs.first_name === "") {
 			setFormErrors((pastErrors) => ({
 				...pastErrors,
-				name: "You need to enter a name",
+				first_name: "You need to enter a valid First name",
 			}));
 			valid = false;
 		}
@@ -86,7 +87,7 @@ const SignUpScreen: React.FC = () => {
 		if (formInputs.last_name === "") {
 			setFormErrors((pastErrors) => ({
 				...pastErrors,
-				lastName: "You need to enter you last name",
+				last_name: "You need to enter a valid Last name",
 			}));
 			valid = false;
 		}
@@ -95,7 +96,7 @@ const SignUpScreen: React.FC = () => {
 		if (!formInputs.email || !validateEmail(formInputs.email)) {
 			setFormErrors((pastErrors) => ({
 				...pastErrors,
-				email: "You need to enter a valid email address",
+				email: "You need to enter a valid Email address",
 			}));
 			valid = false;
 		}
@@ -107,7 +108,7 @@ const SignUpScreen: React.FC = () => {
 		) {
 			setFormErrors((pastErrors) => ({
 				...pastErrors,
-				phone: "Invalid Phone number",
+				phone_number: "You need to enter a valid Phone number",
 			}));
 			valid = false;
 		}
