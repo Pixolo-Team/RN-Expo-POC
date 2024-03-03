@@ -8,6 +8,5 @@ export const commonStyles = StyleSheet.create({
 	},
 	container: {
 		flex: 1,
-		padding: theme.spacing[5],
 	},
 });
