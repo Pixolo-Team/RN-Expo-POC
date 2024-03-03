@@ -4,11 +4,19 @@ import React, { useEffect, useState } from "react";
 // REACT NATIVE //
 import { Text, View } from "react-native";
 
+// PLUGINS //
+import { TouchableOpacity } from "react-native-gesture-handler";
+
 // TYPES //
 import { LoginFormErrorsData, LoginInputData } from "../../../types/account";
+import { RootStackParamList } from "../../../types/navigationParam";
 
 // ENUMS //
 import { AnalyticsPages } from "../../../enums/analytics.enum";
+
+// STYLES //
+import { commonStyles } from "../../../components/common-styles/CommonStyles";
+import { loginStyles } from "../components/login.styles";
 
 // COMPONENTS //
 import TextInputBox from "../../../components/common-components/TextInputBox";
@@ -23,10 +31,18 @@ import { logPageViewEvent } from "../../../services/analytics.service";
 // UTILS //
 import { validateEmail } from "../../../utils/validation.util";
 
+// NAVIGATION //
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+
+type NavigationProp = StackNavigationProp<RootStackParamList, "Login">;
+
 // interface LoginScreenProps {}
 
 /** Login Screen */
 const LoginScreen: React.FC<unknown> = () => {
+	// Navigation
+	const navigation = useNavigation<NavigationProp>();
 	// Define Contexts
 	const { login, isAuthLoading } = useAuthenticationContext();
 
@@ -127,7 +143,7 @@ const LoginScreen: React.FC<unknown> = () => {
 
 	// View starts here
 	return (
-		<>
+		<View style={[commonStyles.container, loginStyles.loginContainer]}>
 			<Text>Login Screen</Text>
 			<View>
 				{/* Email Input */}
@@ -166,7 +182,18 @@ const LoginScreen: React.FC<unknown> = () => {
 				onClick={handleLogin}
 				showButtonLoader={isAuthLoading}
 			/>
-		</>
+			{/* Signup Button */}
+			<View>
+				<TouchableOpacity
+					activeOpacity={0.6}
+					onPress={() => {
+						navigation.navigate("SignUp");
+					}}
+				>
+					<Text> Sign up</Text>
+				</TouchableOpacity>
+			</View>
+		</View>
 	);
 };
 

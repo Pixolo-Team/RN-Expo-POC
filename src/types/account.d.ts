@@ -12,7 +12,7 @@ type LoginFormErrorsData = {
 	form_error: string;
 };
 
-type SignUpApiData = {
+type SignUpApiResponseData = {
 	user: UserCoreData;
 	token: string;
 };
@@ -22,6 +22,7 @@ type SignUpInputData = {
 	email: string;
 	phone_number: string;
 	password: string;
+	confirm_password: string;
 };
 type SignUpFormErrorsData = {
 	first_name_error: string;
@@ -29,6 +30,7 @@ type SignUpFormErrorsData = {
 	email_error: string;
 	phone_number_error: string;
 	password_error: string;
+	confirm_password_error: string;
 	form_error: string;
 };
 
@@ -36,7 +38,7 @@ export {
 	LoginApiData,
 	LoginInputData,
 	LoginFormErrorsData,
-	SignUpApiData,
+	SignUpApiResponseData,
 	SignUpInputData,
 	SignUpFormErrorsData,
 };
