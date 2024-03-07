@@ -3,29 +3,23 @@
 import React, { useEffect, useState } from "react";
 
 // REACT NATIVE //
-import { View, ScrollView, Text } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 
 // TYPES //
 import { SignUpFormErrorsData, SignUpInputData } from "../../../types/account";
 
 // ENUMS //
-import { AnalyticsEvents, AnalyticsPages } from "../../../enums/analytics.enum";
+import { AnalyticsPages } from "../../../enums/analytics.enum";
 
 // COMPONENTS //
-import TextInputBox from "../../../components/common-components/TextInputBox";
 import Button from "../../../components/common-components/Button";
-
-// API SERVICES //
-import { createUserRequest } from "../../../services/api/users.api-service";
+import TextInputBox from "../../../components/common-components/TextInputBox";
 
 // CONTEXTS //
 import { useAuthenticationContext } from "../../../contexts/authentication.context";
 
 // SERVICES //
-import {
-	logEvents,
-	logPageViewEvent,
-} from "../../../services/analytics.service";
+import { logPageViewEvent } from "../../../services/analytics.service";
 
 // UTILS //
 import { validateSignUpFormInputs } from "../../../utils/signUpFormInputValidation";
@@ -33,7 +27,7 @@ import { validateSignUpFormInputs } from "../../../utils/signUpFormInputValidati
 /** Sign up screen component */
 const SignUpScreen: React.FC = () => {
 	// Define Contexts
-	const { login } = useAuthenticationContext();
+	const { doSignUp } = useAuthenticationContext();
 
 	// Define States
 	const [formInputs, setFormInputs] = useState<SignUpInputData>({
@@ -77,25 +71,12 @@ const SignUpScreen: React.FC = () => {
 		// Check Form validity
 		if (validateSignUpFormInputs(formInputs, setFormErrors)) {
 			try {
-				// Send the data to the endpoint
-				const signUpResponse = await createUserRequest(formInputs);
-				if (signUpResponse.status) {
-					// Log the event in Analytics for User Sign Up
-					logEvents(AnalyticsEvents.USER_SIGN_UP, {
-						user_id: signUpResponse.data._id,
-						username: signUpResponse.data.username,
-						email: signUpResponse.data.email,
-					});
-					// Login the User into the App
-					login({
-						email_input: formInputs.email,
-						password_input: formInputs.password,
-					});
-				} else {
-					// Handle sign up error
-					console.log(signUpResponse.message);
-					setFormErrors((pastErrors) => ({
-						...pastErrors,
+				// Call the Sign Up Function in the Authentication Context
+				const signUpResponse = await doSignUp(formInputs);
+				// Check the Sign Up Response (to show Errors)
+				if (!signUpResponse.status) {
+					setFormErrors((prevErrors) => ({
+						...prevErrors,
 						form_error: signUpResponse.message,
 					}));
 				}
@@ -111,7 +92,7 @@ const SignUpScreen: React.FC = () => {
 
 	// Use Effect and Focus Effect
 	useEffect(() => {
-		// Log Event in analytics when Login Screen is opened
+		// Log Event in analytics when Sign Up Screen is opened
 		logPageViewEvent(AnalyticsPages.SIGNUP);
 	}, []);
 
@@ -206,6 +187,7 @@ const SignUpScreen: React.FC = () => {
 					isError={formErrors.confirm_password_error !== ""}
 					errorMessage={formErrors.confirm_password_error}
 				/>
+
 				{/* Error Message */}
 				{formErrors.form_error !== "" && <Text>{formErrors.form_error}</Text>}
 

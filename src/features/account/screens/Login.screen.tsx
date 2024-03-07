@@ -29,7 +29,7 @@ import { useAuthenticationContext } from "../../../contexts/authentication.conte
 import { logPageViewEvent } from "../../../services/analytics.service";
 
 // UTILS //
-import { validateEmail } from "../../../utils/validation.util";
+import { validateLoginFormInputs } from "../../../utils/loginFormInputValidation";
 
 // NAVIGATION //
 import { useNavigation } from "@react-navigation/native";
@@ -84,37 +84,12 @@ const LoginScreen: React.FC<unknown> = () => {
 		});
 	};
 
-	/** Validate all the Inputs in the Form */
-	const validateInputs = (): boolean => {
-		let isValid = true;
-		// Check if Username Input is filled
-		if (formInputs.email_input === "" || !validateEmail(formInputs.email_input)) {
-			setFormErrors((prevErrors) => ({
-				...prevErrors,
-				email_error: "You need to enter a valid Email",
-			}));
-			isValid = false;
-		}
-
-		// Check if password input is filled
-		if (formInputs.password_input === "") {
-			setFormErrors((prevErrors) => ({
-				...prevErrors,
-				password_error: "You need to enter a valid Password",
-			}));
-			isValid = false;
-		}
-
-		// Return the validation State
-		return isValid;
-	};
-
 	/** Handle the Login Functionality - via the Authentication Context */
 	const handleLogin = async (): Promise<void> => {
 		// Reset the old errors
 		resetErrors();
 		// Check input validity
-		if (validateInputs()) {
+		if (validateLoginFormInputs(formInputs, setFormErrors)) {
 			try {
 				// Call the Login Function in the Authentication Context
 				const loginResponse = await login(formInputs);
