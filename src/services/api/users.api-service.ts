@@ -32,7 +32,17 @@ export const createUserRequest = async (
 			method: "post",
 			url: `${API_URL}dummy/create-user.php`,
 			headers: {},
-			data: user,
+			data: {
+				...user,
+				device: {
+					expo_id: await getPushToken(),
+					device_id: CONSTANTS.IS_ANDROID
+						? androidId
+						: await getIosIdForVendorAsync(),
+					platform: CONSTANTS.OS,
+					device_name: device.brand ?? "Unknown Device",
+				} as DeviceData,
+			},
 		};
 
 		// Make call to the API
