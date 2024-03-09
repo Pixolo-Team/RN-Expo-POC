@@ -132,7 +132,7 @@ export const AuthenticationProvider: React.FC<AuthenticationProviderProps> = ({
 				setIsAuthLoading(false);
 				return {
 					status: false,
-					message: "User not Logged In",
+					message: loginResponse.message,
 				};
 			}
 		} catch (error: any) {
@@ -219,7 +219,7 @@ export const AuthenticationProvider: React.FC<AuthenticationProviderProps> = ({
 				setIsAuthLoading(false);
 				return {
 					status: false,
-					message: "User not Signed Up",
+					message: signUpResponse.message,
 				};
 			}
 		} catch (error: any) {

@@ -15,8 +15,8 @@ import { RootStackParamList } from "../../../types/navigationParam";
 import { AnalyticsPages } from "../../../enums/analytics.enum";
 
 // STYLES //
-import { commonStyles } from "../../../components/common-styles/CommonStyles";
-import { loginStyles } from "../components/login.styles";
+import { commonStyles } from "../../../components/common-styles/commonStyles";
+import { accountFormStyles } from "../components/accountForm.styles";
 
 // COMPONENTS //
 import TextInputBox from "../../../components/common-components/TextInputBox";
@@ -118,11 +118,12 @@ const LoginScreen: React.FC<unknown> = () => {
 
 	// View starts here
 	return (
-		<View style={[commonStyles.container, loginStyles.loginContainer]}>
+		<View style={[commonStyles.container, accountFormStyles.loginContainer]}>
 			<Text>Login Screen</Text>
 			<View>
 				{/* Email Input */}
 				<TextInputBox
+					style={accountFormStyles.inputBox}
 					label="Email"
 					value={formInputs.email_input}
 					placeholder="Enter the Email"
@@ -135,6 +136,7 @@ const LoginScreen: React.FC<unknown> = () => {
 
 				{/* Password Input */}
 				<TextInputBox
+					style={accountFormStyles.inputBox}
 					label="Password"
 					placeholder="********"
 					value={formInputs.password_input}

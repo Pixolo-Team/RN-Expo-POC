@@ -14,6 +14,7 @@ import { AnalyticsPages } from "../../../enums/analytics.enum";
 // COMPONENTS //
 import Button from "../../../components/common-components/Button";
 import TextInputBox from "../../../components/common-components/TextInputBox";
+import { accountFormStyles } from "../components/accountForm.styles";
 
 // CONTEXTS //
 import { useAuthenticationContext } from "../../../contexts/authentication.context";
@@ -24,7 +25,7 @@ import { logPageViewEvent } from "../../../services/analytics.service";
 // UTILS //
 import { validateSignUpFormInputs } from "../../../utils/signUpFormInputValidation";
 
-/** Sign up screen component */
+/** Sign Up screen */
 const SignUpScreen: React.FC = () => {
 	// Define Contexts
 	const { doSignUp } = useAuthenticationContext();
@@ -98,12 +99,13 @@ const SignUpScreen: React.FC = () => {
 
 	// View starts
 	return (
-		<ScrollView>
+		<ScrollView style={[accountFormStyles.loginContainer]}>
 			<View>
 				{/* Input for First Name */}
 				<TextInputBox
+					style={accountFormStyles.inputBox}
 					label="First Name"
-					placeholder="Enter Your First Name"
+					placeholder="Enter your First Name"
 					onChangeText={(text) =>
 						setFormInputs((inputs) => ({ ...inputs, first_name: text }))
 					}
@@ -116,8 +118,9 @@ const SignUpScreen: React.FC = () => {
 
 				{/* Input for Last Name */}
 				<TextInputBox
+					style={accountFormStyles.inputBox}
 					label="Last Name"
-					placeholder="Enter Your Last Name"
+					placeholder="Enter your Last Name"
 					onChangeText={(text) =>
 						setFormInputs((inputs) => ({ ...inputs, last_name: text }))
 					}
@@ -130,8 +133,9 @@ const SignUpScreen: React.FC = () => {
 
 				{/* Input for Email Address */}
 				<TextInputBox
+					style={accountFormStyles.inputBox}
 					label="Email"
-					placeholder="Enter Your Email Address"
+					placeholder="Enter your Email Address"
 					onChangeText={(text) =>
 						setFormInputs((inputs) => ({ ...inputs, email: text }))
 					}
@@ -142,10 +146,11 @@ const SignUpScreen: React.FC = () => {
 					errorMessage={formErrors.email_error}
 				/>
 
-				{/* Input for Phone number */}
+				{/* Input for Phone Number */}
 				<TextInputBox
+					style={accountFormStyles.inputBox}
 					label="Phone Number"
-					placeholder="Enter Your Phone Number"
+					placeholder="Enter your Phone Number"
 					onChangeText={(text) =>
 						setFormInputs((inputs) => ({ ...inputs, phone_number: text }))
 					}
@@ -160,8 +165,9 @@ const SignUpScreen: React.FC = () => {
 
 				{/* Input for Password */}
 				<TextInputBox
+					style={accountFormStyles.inputBox}
 					label="Password"
-					placeholder="Enter Your Password"
+					placeholder="Enter your Password"
 					onChangeText={(text) =>
 						setFormInputs((inputs) => ({ ...inputs, password: text }))
 					}
@@ -174,6 +180,7 @@ const SignUpScreen: React.FC = () => {
 
 				{/* Input for Confirm Password */}
 				<TextInputBox
+					style={accountFormStyles.inputBox}
 					label="Confirm Password"
 					placeholder="Re-Enter your Password"
 					onChangeText={(text) =>
@@ -191,7 +198,7 @@ const SignUpScreen: React.FC = () => {
 				{/* Error Message */}
 				{formErrors.form_error !== "" && <Text>{formErrors.form_error}</Text>}
 
-				{/* Submit Button Todo: Use Custom Button Component Here */}
+				{/* Submit Button */}
 				<Button size="big" text="Sign Up" mode="block" onClick={handleSignUp} />
 			</View>
 		</ScrollView>

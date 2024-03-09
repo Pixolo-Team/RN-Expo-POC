@@ -5,10 +5,10 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
 // OTHERS //
-import LoginScreen from "../../features/account/screens/Login.screen";
-import SignUpScreen from "../../features/account/screens/SignUp.screen";
 
 // SCREENS //
+import SignUpScreen from "../../features/account/screens/SignUp.screen";
+import LoginScreen from "../../features/account/screens/Login.screen";
 
 const AuthStackScreens = createStackNavigator();
 
