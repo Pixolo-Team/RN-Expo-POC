@@ -8,7 +8,7 @@ import * as device from "expo-device";
 // TYPES //
 import { DeviceData, UserData } from "../../types/users";
 import { ApiResponseData } from "../../types/app";
-import { LoginApiData } from "../../types/account";
+import { LoginApiData, SignUpApiResponseData } from "../../types/account";
 
 // ENUMS //
 import { LocalStorageKeys } from "../../enums/local-storage.enum";
@@ -25,18 +25,30 @@ import { API_URL, CONSTANTS } from "../../infrastructure/constants";
 /** Create User (Sign Up) */
 export const createUserRequest = async (
 	user: Partial<UserData>
-): Promise<ApiResponseData<UserData>> => {
+): Promise<ApiResponseData<SignUpApiResponseData>> => {
 	try {
 		// Set up the API Call Config
 		const config: AxiosRequestConfig = {
 			method: "post",
 			url: `${API_URL}dummy/create-user.php`,
 			headers: {},
-			data: user,
+			data: {
+				...user,
+				device: {
+					expo_id: await getPushToken(),
+					device_id: CONSTANTS.IS_ANDROID
+						? androidId
+						: await getIosIdForVendorAsync(),
+					platform: CONSTANTS.OS,
+					device_name: device.brand ?? "Unknown Device",
+				} as DeviceData,
+			},
 		};
 
 		// Make call to the API
-		const response = await axios.request<ApiResponseData<UserData>>(config);
+		const response = await axios.request<ApiResponseData<SignUpApiResponseData>>(
+			config
+		);
 		return response.data;
 	} catch (error: any) {
 		return error.response;

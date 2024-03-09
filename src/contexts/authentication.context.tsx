@@ -4,7 +4,7 @@ import React, { useEffect, useMemo, useState } from "react";
 // TYPES //
 import { UserData } from "../types/users";
 import { ApiResponseData } from "../types/app";
-import { LoginInputData } from "../types/account";
+import { LoginInputData, SignUpInputData } from "../types/account";
 
 // ENUMS //
 import { LocalStorageKeys } from "../enums/local-storage.enum";
@@ -14,6 +14,7 @@ import Loader from "../components/common-components/Loader";
 
 // API SERVICES //
 import {
+	createUserRequest,
 	loginRequest,
 	logoutRequest,
 	verifyTokenRequest,
@@ -26,7 +27,7 @@ import {
 	setDataInLocalStorage,
 } from "../services/local-storage.service";
 
-// CONTEXTS //
+// OTHERS //
 import { useUserContext } from "./user.context";
 
 // Define all the state you want to share globally here
@@ -37,6 +38,9 @@ type AuthenticationState = {
 
 type AuthenticationContextType = AuthenticationState & {
 	login: (user: LoginInputData) => Promise<{ status: boolean; message: string }>;
+	doSignUp: (
+		user: SignUpInputData
+	) => Promise<{ status: boolean; message: string }>;
 	logout: () => Promise<void>;
 	// Define setters for your other state here
 };
@@ -128,7 +132,7 @@ export const AuthenticationProvider: React.FC<AuthenticationProviderProps> = ({
 				setIsAuthLoading(false);
 				return {
 					status: false,
-					message: "User not Logged In",
+					message: loginResponse.message,
 				};
 			}
 		} catch (error: any) {
@@ -191,6 +195,44 @@ export const AuthenticationProvider: React.FC<AuthenticationProviderProps> = ({
 		}
 	};
 
+	/** Sign Up a User */
+	const doSignUp = async (
+		userInput: SignUpInputData
+	): Promise<{ status: boolean; message: string }> => {
+		// Set the verifying User state to true
+		setIsAuthLoading(true);
+
+		// Make API Call to Sign Up the User
+		try {
+			const signUpResponse = await createUserRequest(userInput);
+
+			if (signUpResponse.status) {
+				// Login the User into the App
+				loginLocally(signUpResponse.data.user, signUpResponse.data.token);
+				setIsAuthLoading(false);
+				return {
+					status: true,
+					message: "User Signed Up Successfully",
+				};
+			} else {
+				// If the User was not successfully Signed In
+				setIsAuthLoading(false);
+				return {
+					status: false,
+					message: signUpResponse.message,
+				};
+			}
+		} catch (error: any) {
+			// If the API returned an unexpected Error
+			console.log(error);
+			setIsAuthLoading(false);
+			return {
+				status: false,
+				message: "Error Sign Up",
+			};
+		}
+	};
+
 	// useEffect
 	useEffect(() => {
 		checkLoggedIn();
@@ -203,9 +245,10 @@ export const AuthenticationProvider: React.FC<AuthenticationProviderProps> = ({
 			isAuthLoading,
 			login,
 			logout,
+			doSignUp,
 			// Add your other state and setters here
 		}),
-		[isAuthenticated, isAuthLoading, login, logout] // Dependency array
+		[isAuthenticated, isAuthLoading, login, logout, doSignUp] // Dependency array
 	);
 
 	return (

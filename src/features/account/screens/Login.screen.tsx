@@ -4,11 +4,19 @@ import React, { useEffect, useState } from "react";
 // REACT NATIVE //
 import { Text, View } from "react-native";
 
+// PLUGINS //
+import { TouchableOpacity } from "react-native-gesture-handler";
+
 // TYPES //
 import { LoginFormErrorsData, LoginInputData } from "../../../types/account";
+import { RootStackParamList } from "../../../types/navigationParam";
 
 // ENUMS //
 import { AnalyticsPages } from "../../../enums/analytics.enum";
+
+// STYLES //
+import { commonStyles } from "../../../components/common-styles/commonStyles";
+import { accountFormStyles } from "../components/accountForm.styles";
 
 // COMPONENTS //
 import TextInputBox from "../../../components/common-components/TextInputBox";
@@ -21,12 +29,20 @@ import { useAuthenticationContext } from "../../../contexts/authentication.conte
 import { logPageViewEvent } from "../../../services/analytics.service";
 
 // UTILS //
-import { validateEmail } from "../../../utils/validation.util";
+import { validateLoginFormInputs } from "../../../utils/loginFormInputValidation";
+
+// NAVIGATION //
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+
+type NavigationProp = StackNavigationProp<RootStackParamList, "Login">;
 
 // interface LoginScreenProps {}
 
 /** Login Screen */
 const LoginScreen: React.FC<unknown> = () => {
+	// Navigation
+	const navigation = useNavigation<NavigationProp>();
 	// Define Contexts
 	const { login, isAuthLoading } = useAuthenticationContext();
 
@@ -68,37 +84,12 @@ const LoginScreen: React.FC<unknown> = () => {
 		});
 	};
 
-	/** Validate all the Inputs in the Form */
-	const validateInputs = (): boolean => {
-		let isValid = true;
-		// Check if Username Input is filled
-		if (formInputs.email_input === "" || !validateEmail(formInputs.email_input)) {
-			setFormErrors((prevErrors) => ({
-				...prevErrors,
-				email_error: "You need to enter a valid Email",
-			}));
-			isValid = false;
-		}
-
-		// Check if password input is filled
-		if (formInputs.password_input === "") {
-			setFormErrors((prevErrors) => ({
-				...prevErrors,
-				password_error: "You need to enter a valid Password",
-			}));
-			isValid = false;
-		}
-
-		// Return the validation State
-		return isValid;
-	};
-
 	/** Handle the Login Functionality - via the Authentication Context */
 	const handleLogin = async (): Promise<void> => {
 		// Reset the old errors
 		resetErrors();
 		// Check input validity
-		if (validateInputs()) {
+		if (validateLoginFormInputs(formInputs, setFormErrors)) {
 			try {
 				// Call the Login Function in the Authentication Context
 				const loginResponse = await login(formInputs);
@@ -127,11 +118,12 @@ const LoginScreen: React.FC<unknown> = () => {
 
 	// View starts here
 	return (
-		<>
+		<View style={[commonStyles.container, accountFormStyles.loginContainer]}>
 			<Text>Login Screen</Text>
 			<View>
 				{/* Email Input */}
 				<TextInputBox
+					style={accountFormStyles.inputBox}
 					label="Email"
 					value={formInputs.email_input}
 					placeholder="Enter the Email"
@@ -144,6 +136,7 @@ const LoginScreen: React.FC<unknown> = () => {
 
 				{/* Password Input */}
 				<TextInputBox
+					style={accountFormStyles.inputBox}
 					label="Password"
 					placeholder="********"
 					value={formInputs.password_input}
@@ -166,7 +159,18 @@ const LoginScreen: React.FC<unknown> = () => {
 				onClick={handleLogin}
 				showButtonLoader={isAuthLoading}
 			/>
-		</>
+			{/* Signup Button */}
+			<View>
+				<TouchableOpacity
+					activeOpacity={0.6}
+					onPress={() => {
+						navigation.navigate("SignUp");
+					}}
+				>
+					<Text> Sign up</Text>
+				</TouchableOpacity>
+			</View>
+		</View>
 	);
 };
 

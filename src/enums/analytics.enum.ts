@@ -7,4 +7,5 @@ export enum AnalyticsEvents {
 
 export enum AnalyticsPages {
 	LOGIN = "Login",
+	SIGNUP = "SignUp",
 }
