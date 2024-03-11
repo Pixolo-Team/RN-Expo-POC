@@ -6,7 +6,11 @@ import React, { useEffect, useState } from "react";
 import { ScrollView, Text, View } from "react-native";
 
 // TYPES //
-import { SignUpFormErrorsData, SignUpInputData } from "../../../types/account";
+import {
+	SignUpFormErrorsData,
+	SignUpInputData,
+	SignUpInputValidationRuleData,
+} from "../../../types/account";
 
 // ENUMS //
 import { AnalyticsPages } from "../../../enums/analytics.enum";
@@ -23,7 +27,7 @@ import { useAuthenticationContext } from "../../../contexts/authentication.conte
 import { logPageViewEvent } from "../../../services/analytics.service";
 
 // UTILS //
-import { validateSignUpFormInputs } from "../../../utils/signUpFormInputValidation";
+import { validateFormInputs } from "../../../utils/signUpFormInputValidation";
 
 /** Sign Up screen */
 const SignUpScreen: React.FC = () => {
@@ -31,6 +35,7 @@ const SignUpScreen: React.FC = () => {
 	const { doSignUp } = useAuthenticationContext();
 
 	// Define States
+	// Form Input States
 	const [formInputs, setFormInputs] = useState<SignUpInputData>({
 		first_name: "",
 		last_name: "",
@@ -51,6 +56,35 @@ const SignUpScreen: React.FC = () => {
 		form_error: "",
 	});
 
+	// Form Validation Rule States
+	const [formValidationRules, setFormValidationRules] =
+		useState<SignUpInputValidationRuleData>({
+			first_name: [
+				{ type: "required", msg: "This field is required" },
+				{ type: "name", msg: "Please Enter Valid First Name" },
+			],
+			last_name: [
+				{ type: "required", msg: "This field is required" },
+				{ type: "name", msg: "Please Enter Valid Last Name" },
+			],
+			email: [
+				{ type: "required", msg: "This field is required" },
+				{ type: "email", msg: "Please Enter Valid Email" },
+			],
+			phone_number: [
+				{ type: "required", msg: "This field is required" },
+				{ type: "phone", msg: "Please Enter Valid Phone Number" },
+			],
+			password: [
+				{ type: "required", msg: "This field is required" },
+				{ type: "password", msg: "Please Enter Valid Password" },
+			],
+			confirm_password: [
+				{ type: "required", msg: "This field is required" },
+				{ type: "confirm_password", msg: "Please Enter Valid Confirm Password" },
+			],
+		});
+
 	// Helper Functions
 	/** Function which resets the error back to the initial value */
 	const resetErrors = (): void => {
@@ -70,7 +104,7 @@ const SignUpScreen: React.FC = () => {
 		// Reset the errors
 		resetErrors();
 		// Check Form validity
-		if (validateSignUpFormInputs(formInputs, setFormErrors)) {
+		if (validateFormInputs(formInputs, setFormErrors, formValidationRules)) {
 			try {
 				// Call the Sign Up Function in the Authentication Context
 				const signUpResponse = await doSignUp(formInputs);

@@ -1,3 +1,8 @@
+type ValidationRuleData = {
+	type?: string;
+	msg?: string;
+	equalsTo?: string;
+};
 type LoginApiData = {
 	user: UserCoreData;
 	token: string;
@@ -10,6 +15,10 @@ type LoginFormErrorsData = {
 	email_error: string;
 	password_error: string;
 	form_error: string;
+};
+type LoginInputValidationRuleData = {
+	email_input: string[];
+	password_input: string[];
 };
 
 type SignUpApiResponseData = {
@@ -33,12 +42,23 @@ type SignUpFormErrorsData = {
 	confirm_password_error: string;
 	form_error: string;
 };
+type SignUpInputValidationRuleData = {
+	first_name: ValidationRuleData[];
+	last_name: ValidationRuleData[];
+	email: ValidationRuleData[];
+	phone_number: ValidationRuleData[];
+	password: ValidationRuleData[];
+	confirm_password: ValidationRuleData[];
+};
 
 export {
+	ValidationRuleData,
 	LoginApiData,
 	LoginInputData,
 	LoginFormErrorsData,
+	LoginInputValidationRuleData,
 	SignUpApiResponseData,
 	SignUpInputData,
 	SignUpFormErrorsData,
+	SignUpInputValidationRuleData,
 };
